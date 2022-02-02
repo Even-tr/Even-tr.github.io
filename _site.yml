@@ -15,4 +15,4 @@ navbar:
     - text: "About"
       href: about.html
     - text: "Calculus"
-      href: Calculus.html
+      href: calculus.html
