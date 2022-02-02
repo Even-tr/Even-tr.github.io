@@ -1,5 +1,18 @@
-name: "my-website"
+name: "MmM"
 output_dir: "docs"
 output:
   html_document:
-    theme: darkly
+    theme: bootstrap
+    
+# “default”, “bootstrap”, “cerulean”, “cosmo”, “darkly”, “flatly”, “journal”, 
+# “lumen”, “paper”, “readable”, “sandstone”, “simplex”, “spacelab”, “united”, “yeti”
+
+navbar:
+  title: "Hi!"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+    - text: "Calculus"
+      href: Calculus.html

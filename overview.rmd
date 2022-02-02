@@ -1,0 +1,7 @@
+---
+title: "Overview"
+---
+Here is some overview of my content. In the Norwegian higher level high school 
+math classes, some themes and concepts are central yet difficult to grasp. I aim
+to make that easier. The themes i will focus on are calculus (derivation and 
+integration), and its prerequisites functions and algebra.

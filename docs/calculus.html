@@ -11,7 +11,7 @@
 
 
 
-<title>MathMathMath</title>
+<title>Kalkulus</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -262,12 +262,47 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">MathMathMath</h1>
+<h1 class="title toc-ignore">Kalkulus</h1>
 
 </div>
 
 
-<p>Welcome!</p>
+<div id="introduksjon" class="section level1">
+<h1>Introduksjon</h1>
+<p>Da jeg først lærte om kalkulus på skolen var jeg ikke var jeg ikke klar over at det var tilfelle. Jeg tror ikke jeg er er den eneste som opplevde dette. Hvis du leser denne artikkelen er det mulig at du enda ikke vet at du lærer kalkulus.</p>
+<p>Kort fortalt er kalkulus derivasjon og integrasjon, men for å gjennomføre disse operasjonene kreves funksjoner, grenseverdier og uendelige følger og rekker. Kalkulus er et av de viktigste verktøyene for å forstå og analysere funksjoner og hva funksjonene modellerer. Dette er fordi kalkulus forteller hvordan forholdet mellom <em>momentan endring</em> og <em>total endring</em>. Hvis vi klarer å beskrive hvordan noe endrer seg kan vi med kalkulus beskrive hvor det ender opp. Dette vil bli tydligere senere.</p>
+</div>
+<div id="den-deriverte" class="section level1">
+<h1>Den deriverte</h1>
+<p>“Den deriverte” til en funksjon er <em>endringshastigheten</em> dens. Vi kan forstå dette geometrisk som hvor bratt tangenten til grafen er på et gitt punkt:</p>
+<p><img src="calculus_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="python"><code>import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+fig = plt.figure()
+ax = plt.axes(xlim=(0, 4), ylim=(-2, 2))
+line, = ax.plot([], [], lw=3)
+
+
+def init():
+    line.set_data([], [])
+    return line,
+
+def animate(i):
+    x = np.linspace(0, 4, 1000)
+    y = np.sin(2 * np.pi * (x - 0.01 * i))
+    line.set_data(x, y)
+    return line,
+
+anim = FuncAnimation(fig, animate, init_func=init,
+                               frames=200, interval=20, blit=True)
+anim.save(&#39;sine_wave.gif&#39;, writer=&#39;ffmpeg&#39;)</code></pre>
+<div class="figure">
+<img src="sine_wave.gif" alt="" />
+<p class="caption">Animasjon!</p>
+</div>
+</div>
 
 
 

@@ -1,4 +1,11 @@
 ---
 title: "About"
 ---
-It is me!
+Hi!
+
+I am a math and computer science student at the University of Oslo. I tutor math
+as a part time job, and after some years i decided to assemble some notes i have 
+collected throughout my 'career'. Feel free to use them and give feedback if you
+have some. 
+
+Cheers!
