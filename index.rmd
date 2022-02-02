@@ -1,6 +1,5 @@
 ---
 title: "My Website"
-output: html_document
 ---
     
 Hello, Website! Welcome to the world.
