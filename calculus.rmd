@@ -4,7 +4,7 @@ title: "Kalkulus"
 
 # Introduksjon
 
-Da jeg først lærte om kalkulus på skolen var jeg ikke var jeg ikke klar over at
+Da jeg først lærte om kalkulus på skolen var ikke klar over at
 det var tilfelle. Jeg tror ikke jeg er er den eneste som opplevde dette. Hvis du
 leser denne artikkelen er det mulig at du enda ikke vet at du lærer kalkulus.
 
@@ -220,5 +220,11 @@ $$
 &= 2x
 \end{aligned}
 $$
+
+Vi ser altså at den deriverte funksjoen til $f(x)=x^2$ er den lineære funksjoen 
+$f'(x) = 2x$. Merk at den deriverte er en ny funksjon. Dette er fordi stigningstallet
+til $f$ endrer seg ettersom $x$ endrer seg. For akkurat denne funksjonen betyr det
+at den er dobbelt så bratt som x-verdien. Videre kan man tenke seg hvordan man kan
+derivere andre funksjoner, for eksempel $f(x) = x^3$ og så videre.
 
 
