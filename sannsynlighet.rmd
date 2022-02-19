@@ -1,0 +1,99 @@
+---
+title: "Innføring i sannsynlighet"
+---
+
+I denne artikkelen innfører vi sannsynlighet fra enkle intuisjoner. Først må vi
+se litt på hva sannsylighet er, hvilke egenskaper det burde ha, og det filosofiske 
+bakteppet. 
+
+Sannsynlighet er noe alle har et personlig forhold til. Om det er yatzy på hytta 
+i barndommen eller risiko knyttet til invisteringer, veddemål og så videre. Dette
+viser seg når man spør den gjengse kvinne i gaten: "Hva er sannsynlighet for at
+et terningkast er seks?". Svaret er som kjent $1/6$. Men hvorfor det? Dette er det
+første vi skal komme frem til.
+
+## Sannsynlighet
+Når vi nå skal finne på sannsynlighet og dets regler, må vi tenke over hvilke krav
+sannsynliget skal ha. Ett slik krav er at sannsyligheter må være positive. Hvorfor 
+dette er et krav kan man diskutere, men helt intuitivt gir det ikke mening å si 
+"Sannsynligheten for å vinne er -0.5". I alle fall for meg skjønner jeg ikke hvordan
+dette kan tolkes. Altså er første krav til sannsynlighet at den må være positiv:
+
+$$
+p(X) \geq 0
+$$
+Der $X$ er en hvilken som helst hendelse. Et annet krav vi setter er at sannsnyligheten
+til at noe som helst hender er 1. Her bruker vi 'noe som helst' for å beskrive alle
+mulige utfall til en hendelse. Med andre ord: noe må skje!  Det betyr også at en 
+sannsynlighet aldri kan overskride 1. Noe kan ikke være mer sannsynlig enn garantert.
+
+Det siste krafet er at hvis to hendelser ikke kan inntreffe samtidig, de er disjunkte,
+så er sannsynligheten at én av de intreffer lik summen av de individuelle sannsynlighetene. 
+
+Kort oppsummert kan vi skrive følgende:
+
+En sannsynliget $P(X)$ må tilfredstille følgende krav:
+
+$$
+\begin{aligned}
+ 0 \leq P(X) &\leq 1\\
+P(\Omega) &= 1\\
+P(X \cup Y) &= P(X) + P(Y), \quad X\cap Y = \emptyset
+\end{aligned}
+$$
+Hvor $\Omega$ betyr alt som kan intreffe. $\Omega$ kalles også for universet eller
+uftfallsrommet. Med denne definisjonen av sannsynlighet kan vi nå undersøke et
+tærningkast. ([Se mer på wikipedia](https://en.wikipedia.org/wiki/Probability_axioms))
+
+## Et tærningkast
+
+Når vi ser på et tærningkast kan en rekke ting skje. Tærningen kan lande på en
+av sinde seks sider, tærningen kan på mirakuløst vis balansere på en side eller 
+et hjørne. Tærningen kan knuse og dermed ikke "lande" på noen som helst side. 
+Tærningen kan også lande på flere side på en gang hvis vi strekker definisjonen
+"å lande" langt nok. Alle disse mulighetene tilsier at vi kanskje ikke burde 
+gjøre nettopp dette - strekke definisjoner hit eller dit. Derfor må det første
+vi gjør i vår undersøkelse være å definere *utfallsrommet* $\Omega$. I dette
+eksempelet er vi bare intresert i tærningen om den lanner på en, og kun én, av
+sine seks sider. Utfallsrommet bilr dermed:
+
+$$
+\Omega = \{1,2,3,4,5,6\}
+$$
+Merk notasjonen $\{ \dots\}$. Dette betyr at utfallsrommet er et sett av mulige 
+utfall og *ikke* tallene en til seks. Derfor kunne vi like godt definert $\Omega$
+slik: $\Omega = \{\text{lander på side én}, \text{lander på side to}, \text{lander på side tre}, \text{lander på side fire}, \text{lander på side fem}, \text{lander på side seks}\} $. Denne notasjonen er identisk, dog
+noe kronglete. Derfor foretrekker vi den kortfattede første.
+
+Nå som utfallsrommet er definert kan vi gå videre. Dessverre er ikke dette tilstrekkelig
+for å vise at $P(X = 1) = 1/6$. Altså at sannsynligheten for å kaste en ener er
+en sjettedel. For å konkludere det må vi komme med en siste antagelse, nemlig at 
+det er like sannsynlig å lande på alle sider. Dette er i varierende grad opplagt 
+for alle som har kastet tærninger. For eksempel i Yatzy er en sekser bare bedre enn
+en enere fordi seks er et høyere tall, og *ikke* fordi seks er mindre sannsynlig. 
+på en annen side, det er heller ikke umulig at en tærning ikke er fullstendig rettferdig,
+og kanskje lander på én side bittelitt oftere. Vi unngår alle disse problemene elegant
+ved å anta at de ikke gjelder. Tærningen vår blir sånn sett ikke en ekte tærning,
+men en idé om en perfekt tærning, - på samme vis en sirkel tegnet med en passer 
+ikke er en faktisk sirkel, bare en tilnærming. Tilbake til tærningen vet vi at
+alle sider er like sannsynlige, og fra kravet om at sannsynligheten må summére til
+én, kan vi sette opp følgende uttrykk:
+
+$$
+\begin{aligned}
+P(\Omega) &= P(X = 1) + P(X = 2) + P(X = 3) + P(X = 4) + P(X = 5) + P(X = 6)\\
+& = P(X = 1) + P(X = 1) + P(X = 1) + P(X = 1) + P(X = 1) + P(X = 1)\\
+&= 6\cdot P(X = 1)
+\end{aligned}
+$$
+Siden $P(\Omega) = 1$ forenkles uttrykket til:
+$$
+1 =  6\cdot P(X = 1) \rightarrow P(X = 1) = 1/6
+$$
+
+
+og vi er dermed i mål og har vist hvorfor sannsynligheten for å kaste en ener
+er en sjettedel. På grunn av antagelsen om at alle sider er like sannsynlige, har
+vi samtidig vist det for alle andre sider.
+
+

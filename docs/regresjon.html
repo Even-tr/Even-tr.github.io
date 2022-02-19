@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Enkel regresjon</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Hi!</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="calculus.html">Calculus</a>
+</li>
+<li>
+  <a href="hello.html">hello</a>
+</li>
+<li>
+  <a href="sannsynlighet.html">Sannsynlighet</a>
+</li>
+<li>
+  <a href="regresjon.html">Regresjon</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Enkel regresjon</h1>
+
+</div>
+
+
+<div id="inføring-i-regresjon" class="section level2">
+<h2>Inføring i regresjon</h2>
+<p>Regresjon handler enkelt og greit om å finne sammenheng i mellom to eller flere observasjoner. Ofte møter vi situasjoner der vi kan måle en rekke fenomener, for eksempel hvordan høyden til befolkningen har økt med tiden. Med en passende modell kan vi muligens forutse hvor høye vi blir fremtiden osv. Jeg har hentet noe data fra SSB over dette, nemlig <a href="https://www.ssb.no/a/histstat/tabeller/4-22.html">gjennomsnittshøyden til værnepliktige siden 1900</a>:</p>
+<pre class="python"><code>import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+plt.style.use(&#39;grayscale&#39;)
+
+
+df = pd.read_csv(&#39;height.csv&#39;, header=None)
+df.head()</code></pre>
+<pre><code>&gt;&gt;       0      1     2     3     4     5     6     7    8    9
+&gt;&gt; 0  1900  170.0  16.9  28.0  30.9  18.0   5.4  20.8   Na   Na
+&gt;&gt; 1  1910  171.0  12.8  26.0  32.3  20.4   6.8  21.7   Na   Na
+&gt;&gt; 2  1920  171.4  12.3  24.4  32.6  21.3   7.7  21.7   Na   Na
+&gt;&gt; 3  1930  172.8   8.4  20.0  32.2  25.8  10.6  23.0   Na   Na
+&gt;&gt; 4  1931  172.6   8.7  20.3  31.8  25.1  11.0  23.1   Na   Na</code></pre>
+<p>Vi kan nå hente ut første kolonne; årstall, og andre kolonne; snitthøyde og grafe de mot hverandre</p>
+<pre class="python"><code>year = df.iloc[:, 0].to_numpy() 
+height = df.iloc[:, 1].to_numpy()
+plt.scatter(year, height)</code></pre>
+<p><img src="regresjon_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Her ser vi en tydelig trend, men hvordan kan vi uttrykke den best mulig, og hvordan kan vi predikere fremtidige årstall? Før vi begir oss ut på denne vanskelige oppgaven kan det være lurt å gjennomgå et konstruert eksempel. Et eksempel der vi kjenner fasiten, altså den reelle sammenhengen. Med fasiten simulerer vi deretter at vi gjør noen tilfeldige målinger, og til slutt bruker vi de målingene til å prøve å gjennfinne fasiten.</p>
+<p>Vi velger den enkleste funksjonen tenkelig, nemlig en lineær funksjon. De kan altids uttrykkes på formen:</p>
+<p><span class="math display">\[
+f(x) = a + bx
+\]</span> Det betyr at så lenge vi vet (eller gjetter informert) at fasiten er lineær, trenger vi kun å finne de to parameterne <span class="math inline">\(a\)</span> og <span class="math inline">\(b\)</span>. I praksis ser dette slik ut:</p>
+<pre class="python"><code># antall observasjoner vi trekker
+n_samples = 25
+
+# grensene for plotting
+xmin = -2 
+xmax = 2
+xplot = np.linspace(xmin, xmax, 100) # xverider brukt til plotte funksjoner
+
+# spredning på støy
+sigma = 1
+def f(x):
+  return 2 + 3*x
+
+def x_sample():
+  return np.random.uniform(xmin, xmax, n_samples) 
+def add_noise():
+  return np.random.normal(0, sigma,n_samples)
+
+xs = x_sample()
+ys = f(xs) + add_noise()
+
+plt.scatter(xs, ys)</code></pre>
+<p><img src="regresjon_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<p>Denne grafen er git ved funksjoen:</p>
+<p><span class="math display">\[
+f(x) = 2 + 3x + \epsilon
+\]</span> Der <span class="math inline">\(\epsilon\)</span> er et normalfordelt støyledd med gjennomsnitt <span class="math inline">\(\mu = 0\)</span> og standardavvik <span class="math inline">\(\sigma = 1\)</span>.</p>
+<p>Formlene vi bruker for å finne <span class="math inline">\(a\)</span> og <span class="math inline">\(b\)</span> er som følger:</p>
+<p><span class="math display">\[
+\begin{align}
+\hat{b} &amp;= \frac{\sum(x_i - \overline{x})(y_i - \overline{y})}{\sum(x_i - \overline{x})^2}\\
+\hat{a} &amp;= \overline{y} - \hat{b}\overline{x}
+\end{align}
+\]</span></p>
+<p>Linjen over en variabel, som f.eks. <span class="math inline">\(\overline{x}\)</span> betyr gjennomsnittet til <span class="math inline">\(x\)</span>. Den store greske bokstaven <span class="math inline">\(\Sigma\)</span> betyr summen over alle <span class="math inline">\(x\)</span>-er eller <span class="math inline">\(y\)</span>-er (indeksert med i). Vi ser atlså at vi finner parameteren <span class="math inline">\(b\)</span> ved å dele summen av det sentraliserte produktet av <span class="math inline">\(x\)</span>-ene og <span class="math inline">\(y\)</span>-ene over summen av den de sentraliserte og kvadrerte <span class="math inline">\(x\)</span>-ene. A finner vi deretter ved å trekke b ganget med snittet til <span class="math inline">\(x\)</span>-ene fra snittet til <span class="math inline">\(y\)</span>-ene. I kode ser dette slik ut:</p>
+<pre class="python"><code>def b_approx(x, y):
+  return np.dot(x - x.mean(), y - y.mean()) / np.dot(x - x.mean(), x - x.mean())
+
+def a_approx(x, y, b):
+  return y.mean() - b*x.mean()</code></pre>
+<p>Vi kan nå teste koden på dataen vi plottet over:</p>
+<pre class="python"><code>bhat = b_approx(xs, ys)
+ahat = a_approx(xs, ys, bhat)
+
+print(f&#39;a ={ahat: .2f}, b ={bhat: .2f}&#39;)</code></pre>
+<pre><code>&gt;&gt; a = 1.69, b = 2.78</code></pre>
+<p>Vi ser at dette er ganske nærme det faktiske svaret. Vi kan plotte linjen også på følgende måte:</p>
+<pre class="python"><code>def linear_function(a, b):
+  return lambda x: a + b*x
+
+regression_line = linear_function(ahat, bhat)
+plt.scatter(xs, ys)
+plt.plot(xs,  regression_line(xs) )</code></pre>
+<p><img src="regresjon_files/figure-html/unnamed-chunk-7-5.png" width="672" /></p>
+<p>Denne linjen er tilfeldig. Det er viktig å legge merke til. Selv om den passer dataen veldig godt, kunne den vært anderledes. Vi kan gjøre den samme simuleringen flere ganger og se hvordan linjene blir. For det lager vi en hjelpefunksjon som finner <span class="math inline">\(a\)</span> og <span class="math inline">\(b\)</span> og returnerer linjen:</p>
+<pre class="python"><code>def regression(x, y):
+  b = b_approx(x, y)
+  a = a_approx(x, y, b)
+  return linear_function(a, b)
+
+for i in range(10):
+  xs = np.random.uniform(-2, 2, n_samples) # trekker 100 tilfed
+  ys = f(xs) + np.random.normal(0,1,n_samples)
+  regression_line = regression(xs, ys)
+  plt.plot(xs, regression_line(xs), alpha=0.5)
+plt.show()</code></pre>
+<p><img src="regresjon_files/figure-html/unnamed-chunk-8-7.png" width="672" /></p>
+<p>Vi ser at det er noe variasjon. Vi plotter enda flere, si tusen linjer:</p>
+<pre class="python"><code>for i in range(1000):
+  xs = np.random.uniform(-2, 2, n_samples) # trekker 100 tilfed
+  ys = f(xs) + np.random.normal(0,1,n_samples)
+  regression_line = regression(xs, ys)
+  plt.plot(xs, regression_line(xs), alpha=0.01)
+  
+plt.plot(xplot, f(xplot), c=&#39;red&#39;)
+plt.show()</code></pre>
+<p><img src="regresjon_files/figure-html/unnamed-chunk-9-9.png" width="672" /></p>
+</div>
+<div id="flere-funksjonsfamilier" class="section level2">
+<h2>Flere funksjonsfamilier</h2>
+<p>Her er den røde linjen den sanne funksjonen. Alt i alt ser det ut som om linjene vi finner er veldig gode, men det er kanskje ikke så rart når vi startet med en perfekt lineær sammenheng. I virkeligheten er dette ofte ikke tilfelle, men lineære modeller kan likevel passe veldig godt. For å vise dette skal vi se på noen flere funksjoner:</p>
+<pre class="python"><code>def g(x):
+  return 0.4*(x+3)**2 - 1.5
+
+def h(x):
+  return np.exp(0.15* x+3) - 18
+
+def i(x):
+  return 16/(1 + np.exp(-x)) - 6
+
+fig, axs = plt.subplots(2, 2)
+axs[0, 0].plot(xplot, f(xplot))
+axs[0, 0].set_title(&#39;lineær&#39;)
+
+axs[0, 1].plot(xplot, h(xplot))
+axs[0, 1].set_title(&#39;kvadratisk&#39;)
+
+axs[1, 0].plot(xplot, g(xplot))
+axs[1, 0].set_title(&#39;eksponensiell&#39;)
+
+axs[1, 1].plot(xplot, i(xplot))
+axs[1, 1].set_title(&#39;logit&#39;)
+
+# Hide x labels and tick labels for top plots and y ticks for right plots.
+for ax in axs.flat:
+    ax.label_outer()
+    
+plt.show()</code></pre>
+<p><img src="regresjon_files/figure-html/unnamed-chunk-10-11.png" width="672" /></p>
+<p>Her ser vi en lineær funksjon, en kvadratisk funksjon, en eksponensiell funksjon og en siste funksjon som kalles logit. Dette er alle vanlige relasjoner å møte på i virkeligheten, og alle kan minne likne på lineære funskjoner om de er zoomet rikgit inn (som de er i dette tilfellet). Hvis vi trekker tilfeldig fra disse funksjonene og sammenlikner er det veldig vanskelig å sille de fra hverandre:</p>
+<pre class="python"><code>
+fig, axs = plt.subplots(2, 2)
+
+xs = x_sample()
+ys = f(xs) + add_noise()
+axs[0, 0].scatter(xs, ys)
+axs[0, 0].set_title(&#39;lineær&#39;)
+
+xs = x_sample()
+ys = g(xs) + add_noise()
+axs[0, 1].scatter(xs, ys)
+axs[0, 1].set_title(&#39;kvadratisk&#39;)
+
+xs = x_sample()
+ys = h(xs) + add_noise()
+axs[1, 0].scatter(xs, ys)
+axs[1, 0].set_title(&#39;eksponensiell&#39;)
+
+xs = x_sample()
+ys = i(xs) + add_noise()
+axs[1, 1].scatter(xs, ys)
+axs[1, 1].set_title(&#39;logit&#39;)
+
+# Hide x labels and tick labels for top plots and y ticks for right plots.
+for ax in axs.flat:
+    ax.label_outer()
+    
+plt.show()</code></pre>
+<p><img src="regresjon_files/figure-html/unnamed-chunk-11-13.png" width="672" /></p>
+</div>
+<div id="regresjon-på-høydedataen" class="section level2">
+<h2>Regresjon på høydedataen</h2>
+<p>Hvis vi nå prøver denne funksjonen på høydedataen får vi følgende resultat:</p>
+<pre class="python"><code>bhat =b_approx(year, height)
+ahat =a_approx(year, height, bhat)
+regression_line = linear_function(ahat, bhat)
+
+print(f&#39;a: {ahat}, b: {bhat}&#39;)</code></pre>
+<pre><code>&gt;&gt; a: -16.980420722183737, b: 0.09882216258914854</code></pre>
+<pre class="python"><code>plt.scatter(year, height)
+plt.plot(year, regression_line(year))</code></pre>
+<p><img src="regresjon_files/figure-html/unnamed-chunk-12-15.png" width="672" /></p>
+<p>Vi ser at linjen passer nokså godt, men det virker ikke som om relasjonen vi leter etter er lineær. Det er flere grunner til å betvile denne antaglesen før vi i det hele tatt ser på dataen. For det første vil en lineær trend på et tidspunkt krysse null, men å tillate at snitthøyden er null er absurd. En lineær trend vil også antyde at vi kan vokse grenseløst høye, som også er lite trolig, dog ikke like absurd. Mer konkret kan vi tolke parameterne <span class="math inline">\(a\)</span> og <span class="math inline">\(b\)</span>, og de sier at i år 0 var snitthøyden minus 16 centimeter og at snitthøyden vokser med én millimeter per år.</p>
+<p>Vi kan prøve å tilpasse et polynom, det er en funksjon av n-te grad. Etter litt prøving og feiling ser det ut som en femtegradsfunksjon passer fint. Derimot kan vi i mye mindre grad tolke funksjonen utenfor datapunktene (dette kalles ekstrapolering)</p>
+<pre class="python"><code>from sklearn.linear_model import Ridge
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.pipeline import make_pipeline
+
+X = year.reshape(-1, 1)
+Xplot = np.linspace(year[0], year[-1], 100).reshape(-1, 1)
+y = height
+
+# plot training points
+plt.scatter(year, height, label=&quot;Data points&quot;)
+model = make_pipeline(PolynomialFeatures(5), Ridge(alpha=0.01)).fit(X, y)</code></pre>
+<pre><code>&gt;&gt; /opt/homebrew/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:156: LinAlgWarning: Ill-conditioned matrix (rcond=4.34857e-35): result may not be accurate.
+&gt;&gt;   return linalg.solve(A, Xy, sym_pos=True, overwrite_a=True).T</code></pre>
+<pre class="python"><code>yplot = model.predict(Xplot)
+plt.plot(Xplot, yplot, label=f&quot;degree {5}&quot;)
+plt.legend()</code></pre>
+<p><img src="regresjon_files/figure-html/unnamed-chunk-13-17.png" width="672" /></p>
+<p>Hvis vi prøver på nytt å predikere hvor høye folk var i år null vil vi få et veldig rart svar:</p>
+<pre class="python"><code>print(f&#39;Predikert høyde i år 0: {int(model.predict( np.array([0]).reshape(1,-1))[0])} cm&#39;)</code></pre>
+<pre><code>&gt;&gt; Predikert høyde i år 0: 771785 cm</code></pre>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

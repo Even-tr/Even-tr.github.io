@@ -11,7 +11,7 @@
 
 
 
-<title>Kalkulus</title>
+<title>Hello</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -271,55 +271,26 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Kalkulus</h1>
+<h1 class="title toc-ignore">Hello</h1>
 
 </div>
 
 
-<div id="introduksjon" class="section level1">
-<h1>Introduksjon</h1>
-<p>Da jeg først lærte om kalkulus på skolen var ikke klar over at det var tilfelle. Jeg tror ikke jeg er er den eneste som opplevde dette. Hvis du leser denne artikkelen er det mulig at du enda ikke vet at du lærer kalkulus.</p>
-<p>Kort fortalt er kalkulus derivasjon og integrasjon, men for å gjennomføre disse operasjonene kreves funksjoner, grenseverdier og uendelige følger og rekker. Kalkulus er et av de viktigste verktøyene for å forstå og analysere funksjoner og hva funksjonene modellerer. Dette er fordi kalkulus forteller hvordan forholdet mellom <em>momentan endring</em> og <em>total endring</em>. Hvis vi klarer å beskrive hvordan noe endrer seg kan vi med kalkulus beskrive hvor det ender opp. Dette vil bli tydligere senere.</p>
-</div>
-<div id="den-deriverte" class="section level1">
-<h1>Den deriverte</h1>
-<p>“Den deriverte” til en funksjon er <em>endringshastigheten</em> dens. Vi kan forstå dette geometrisk som hvor bratt tangenten til grafen er på et gitt punkt. Animasjonen under illustrere hvordan tangentene til funksjonen <span class="math display">\[
-f(x) = x^2
-\]</span></p>
-<center>
-<img src="tangent.gif" title="fig:" alt="Tangenten" />
-</center>
-<p>For å finne en tangent trenger vi kun to ting: punktet der tangenten treffer kurven samt stigningstallet. Tangeringspunktet er lett å finne, vi kan nemlig bare evaluere funksjonen. Vi velger å kalle interessepunktet for <span class="math display">\[
-(x_1, y_1)
-\]</span> Og <span class="math display">\[ f(x_1) = y_1\]</span> Dessverre er stigningstallet mye vanskeligere å finne, men vi kan prøve noe omtrentlig, og se hvor langt vi kommer. I steden for å lage en tangent, kan vi heller lage en korde: en linje som skjærer funksjonen på to steder. Med to punkter kan vi lett finne linjen som går gjennom. Gitt to punkter <span class="math display">\[
-(x_1, y_1)\\
-(x_2, y_2)
-\]</span> Kan vi vinne stigningstallet, <span class="math inline">\(a\)</span>, med denne enkle formlen: <span class="math display">\[ a = \frac{y_2 - y_1}{x_2-x_1} = \frac{\Delta y}{\Delta x}\]</span> ‘<span class="math inline">\(\Delta\)</span>’ er den gammelgreske bokstaven for ‘d’ og i matematikken symboliserer <em>differansen</em> mellom de to punktene i henholdsvis y-retning og x-retning. Geometrisk kan dette tolkes som forholdet mellom høyden og bredden til trekanten som dannes av de to punktene:</p>
-<p><img src="calculus_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Denne tilnærmingen kan være god eller dårlig avhengig av hvilke punkter vi velger, men merk at den blir bedre og bedre desto nærmere de er hverandre (Dette er ikke alltid tilfelle, noen rare funskjoner har ikke den egenskapen). Animasjonen under illustrerer dette:</p>
-<center>
-<img src="limit.gif" title="fig:" alt="korde" />
-</center>
-<p>Matematisk kan vi si at grenseverdien til korden når <span class="math inline">\(x_1\)</span> og <span class="math inline">\(x_2\)</span> går mot hverandre er tangenten. Vi kan uttrykke det slik: <span class="math display">\[
-\lim_{x_1 \to x_2} \frac{f(x_2) - f(x_1)}{x_2 - x_1} = a
-\]</span></p>
-<p>Der <span class="math inline">\(a\)</span> er stigningstallet til tangenten. Før vi går videre kan det være lurt å redefinere <span class="math inline">\(x_2\)</span> til <span class="math inline">\(x + \Delta x\)</span> og så lar vi <span class="math inline">\(x_1\)</span> bare være <span class="math inline">\(x\)</span>. Da blir uttrykket slik:</p>
-<p><span class="math display">\[
-\lim_{\Delta x \to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x} = f&#39;(x)
-\]</span></p>
-<p>Den deriverte er altså denne grenseverdien, og vi kaller den for <span class="math inline">\(f&#39;(x)\)</span>. For å fullføre denne introduksjonen til derivasjon, kan vi gjennomføre utregninen med funksjonen vår <span class="math inline">\(f(x) = x^2\)</span>:</p>
-<p><span class="math display">\[
-\begin{aligned}
-\lim_{\Delta x \to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x} &amp;= 
-\lim_{\Delta x \to 0} \frac{(x + \Delta x)^2 - x^2}{\Delta x}\\
-&amp;= \lim_{\Delta x \to 0} \frac{x^2 +2x\Delta x + (\Delta x)^2 - x^2}{\Delta x}\\
-&amp;= \lim_{\Delta x \to 0} \frac{2x\Delta x + (\Delta x)^2}{\Delta x}\\
-&amp;= \lim_{\Delta x \to 0} 2x + \Delta x\\
-&amp;= 2x
-\end{aligned}
-\]</span></p>
-<p>Vi ser altså at den deriverte funksjoen til <span class="math inline">\(f(x)=x^2\)</span> er den lineære funksjoen <span class="math inline">\(f&#39;(x) = 2x\)</span>. Merk at den deriverte er en ny funksjon. Dette er fordi stigningstallet til <span class="math inline">\(f\)</span> endrer seg ettersom <span class="math inline">\(x\)</span> endrer seg. For akkurat denne funksjonen betyr det at den er dobbelt så bratt som x-verdien. Videre kan man tenke seg hvordan man kan derivere andre funksjoner, for eksempel <span class="math inline">\(f(x) = x^3\)</span> og så videre.</p>
-</div>
+<p>Heisann sveisann</p>
+<p><span class="math display">\[ f(x) = \frac{1}{x}\]</span></p>
+<pre class="python"><code>import numpy as np
+import matplotlib.pyplot as plt
+plt.figure()
+def f(x):
+  return x**2
+
+xs = np.linspace(-2,2,100)
+
+plt.plot(xs,f(xs))
+plt.show()</code></pre>
+<p><img src="hello_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>plot(cars)</code></pre>
+<p><img src="hello_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
 
 
 

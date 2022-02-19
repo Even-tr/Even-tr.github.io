@@ -30,7 +30,7 @@ Sys.setenv(RETICULATE_PYTHON = "/opt/homebrew/bin/python3")
 library('reticulate')
 ```
 
-```{python, cahce=TRUE, echo=FALSE}
+```{python, echo=FALSE}
 # short script which plots takes a function and its
 # derivative and returns the tangent function at x1
 

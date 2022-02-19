@@ -16,3 +16,9 @@ navbar:
       href: about.html
     - text: "Calculus"
       href: calculus.html
+    - text: "hello"
+      href: hello.html
+    - text: "Sannsynlighet"
+      href: sannsynlighet.html
+    - text: "Regresjon"
+      href: regresjon.html

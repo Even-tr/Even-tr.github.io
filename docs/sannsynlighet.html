@@ -11,7 +11,7 @@
 
 
 
-<title>Kalkulus</title>
+<title>Innføring i sannsynlighet</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -271,54 +271,47 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Kalkulus</h1>
+<h1 class="title toc-ignore">Innføring i sannsynlighet</h1>
 
 </div>
 
 
-<div id="introduksjon" class="section level1">
-<h1>Introduksjon</h1>
-<p>Da jeg først lærte om kalkulus på skolen var ikke klar over at det var tilfelle. Jeg tror ikke jeg er er den eneste som opplevde dette. Hvis du leser denne artikkelen er det mulig at du enda ikke vet at du lærer kalkulus.</p>
-<p>Kort fortalt er kalkulus derivasjon og integrasjon, men for å gjennomføre disse operasjonene kreves funksjoner, grenseverdier og uendelige følger og rekker. Kalkulus er et av de viktigste verktøyene for å forstå og analysere funksjoner og hva funksjonene modellerer. Dette er fordi kalkulus forteller hvordan forholdet mellom <em>momentan endring</em> og <em>total endring</em>. Hvis vi klarer å beskrive hvordan noe endrer seg kan vi med kalkulus beskrive hvor det ender opp. Dette vil bli tydligere senere.</p>
-</div>
-<div id="den-deriverte" class="section level1">
-<h1>Den deriverte</h1>
-<p>“Den deriverte” til en funksjon er <em>endringshastigheten</em> dens. Vi kan forstå dette geometrisk som hvor bratt tangenten til grafen er på et gitt punkt. Animasjonen under illustrere hvordan tangentene til funksjonen <span class="math display">\[
-f(x) = x^2
-\]</span></p>
-<center>
-<img src="tangent.gif" title="fig:" alt="Tangenten" />
-</center>
-<p>For å finne en tangent trenger vi kun to ting: punktet der tangenten treffer kurven samt stigningstallet. Tangeringspunktet er lett å finne, vi kan nemlig bare evaluere funksjonen. Vi velger å kalle interessepunktet for <span class="math display">\[
-(x_1, y_1)
-\]</span> Og <span class="math display">\[ f(x_1) = y_1\]</span> Dessverre er stigningstallet mye vanskeligere å finne, men vi kan prøve noe omtrentlig, og se hvor langt vi kommer. I steden for å lage en tangent, kan vi heller lage en korde: en linje som skjærer funksjonen på to steder. Med to punkter kan vi lett finne linjen som går gjennom. Gitt to punkter <span class="math display">\[
-(x_1, y_1)\\
-(x_2, y_2)
-\]</span> Kan vi vinne stigningstallet, <span class="math inline">\(a\)</span>, med denne enkle formlen: <span class="math display">\[ a = \frac{y_2 - y_1}{x_2-x_1} = \frac{\Delta y}{\Delta x}\]</span> ‘<span class="math inline">\(\Delta\)</span>’ er den gammelgreske bokstaven for ‘d’ og i matematikken symboliserer <em>differansen</em> mellom de to punktene i henholdsvis y-retning og x-retning. Geometrisk kan dette tolkes som forholdet mellom høyden og bredden til trekanten som dannes av de to punktene:</p>
-<p><img src="calculus_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Denne tilnærmingen kan være god eller dårlig avhengig av hvilke punkter vi velger, men merk at den blir bedre og bedre desto nærmere de er hverandre (Dette er ikke alltid tilfelle, noen rare funskjoner har ikke den egenskapen). Animasjonen under illustrerer dette:</p>
-<center>
-<img src="limit.gif" title="fig:" alt="korde" />
-</center>
-<p>Matematisk kan vi si at grenseverdien til korden når <span class="math inline">\(x_1\)</span> og <span class="math inline">\(x_2\)</span> går mot hverandre er tangenten. Vi kan uttrykke det slik: <span class="math display">\[
-\lim_{x_1 \to x_2} \frac{f(x_2) - f(x_1)}{x_2 - x_1} = a
-\]</span></p>
-<p>Der <span class="math inline">\(a\)</span> er stigningstallet til tangenten. Før vi går videre kan det være lurt å redefinere <span class="math inline">\(x_2\)</span> til <span class="math inline">\(x + \Delta x\)</span> og så lar vi <span class="math inline">\(x_1\)</span> bare være <span class="math inline">\(x\)</span>. Da blir uttrykket slik:</p>
+<p>I denne artikkelen innfører vi sannsynlighet fra enkle intuisjoner. Først må vi se litt på hva sannsylighet er, hvilke egenskaper det burde ha, og det filosofiske bakteppet.</p>
+<p>Sannsynlighet er noe alle har et personlig forhold til. Om det er yatzy på hytta i barndommen eller risiko knyttet til invisteringer, veddemål og så videre. Dette viser seg når man spør den gjengse kvinne i gaten: “Hva er sannsynlighet for at et terningkast er seks?”. Svaret er som kjent <span class="math inline">\(1/6\)</span>. Men hvorfor det? Dette er det første vi skal komme frem til.</p>
+<div id="sannsynlighet" class="section level2">
+<h2>Sannsynlighet</h2>
+<p>Når vi nå skal finne på sannsynlighet og dets regler, må vi tenke over hvilke krav sannsynliget skal ha. Ett slik krav er at sannsyligheter må være positive. Hvorfor dette er et krav kan man diskutere, men helt intuitivt gir det ikke mening å si “Sannsynligheten for å vinne er -0.5”. I alle fall for meg skjønner jeg ikke hvordan dette kan tolkes. Altså er første krav til sannsynlighet at den må være positiv:</p>
 <p><span class="math display">\[
-\lim_{\Delta x \to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x} = f&#39;(x)
-\]</span></p>
-<p>Den deriverte er altså denne grenseverdien, og vi kaller den for <span class="math inline">\(f&#39;(x)\)</span>. For å fullføre denne introduksjonen til derivasjon, kan vi gjennomføre utregninen med funksjonen vår <span class="math inline">\(f(x) = x^2\)</span>:</p>
+p(X) \geq 0
+\]</span> Der <span class="math inline">\(X\)</span> er en hvilken som helst hendelse. Et annet krav vi setter er at sannsnyligheten til at noe som helst hender er 1. Her bruker vi ‘noe som helst’ for å beskrive alle mulige utfall til en hendelse. Med andre ord: noe må skje! Det betyr også at en sannsynlighet aldri kan overskride 1. Noe kan ikke være mer sannsynlig enn garantert.</p>
+<p>Det siste krafet er at hvis to hendelser ikke kan inntreffe samtidig, de er disjunkte, så er sannsynligheten at én av de intreffer lik summen av de individuelle sannsynlighetene.</p>
+<p>Kort oppsummert kan vi skrive følgende:</p>
+<p>En sannsynliget <span class="math inline">\(P(X)\)</span> må tilfredstille følgende krav:</p>
 <p><span class="math display">\[
 \begin{aligned}
-\lim_{\Delta x \to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x} &amp;= 
-\lim_{\Delta x \to 0} \frac{(x + \Delta x)^2 - x^2}{\Delta x}\\
-&amp;= \lim_{\Delta x \to 0} \frac{x^2 +2x\Delta x + (\Delta x)^2 - x^2}{\Delta x}\\
-&amp;= \lim_{\Delta x \to 0} \frac{2x\Delta x + (\Delta x)^2}{\Delta x}\\
-&amp;= \lim_{\Delta x \to 0} 2x + \Delta x\\
-&amp;= 2x
+ 0 \leq P(X) &amp;\leq 1\\
+P(\Omega) &amp;= 1\\
+P(X \cup Y) &amp;= P(X) + P(Y), \quad X\cap Y = \emptyset
 \end{aligned}
+\]</span> Hvor <span class="math inline">\(\Omega\)</span> betyr alt som kan intreffe. <span class="math inline">\(\Omega\)</span> kalles også for universet eller uftfallsrommet. Med denne definisjonen av sannsynlighet kan vi nå undersøke et tærningkast. (<a href="https://en.wikipedia.org/wiki/Probability_axioms">Se mer på wikipedia</a>)</p>
+</div>
+<div id="et-tærningkast" class="section level2">
+<h2>Et tærningkast</h2>
+<p>Når vi ser på et tærningkast kan en rekke ting skje. Tærningen kan lande på en av sinde seks sider, tærningen kan på mirakuløst vis balansere på en side eller et hjørne. Tærningen kan knuse og dermed ikke “lande” på noen som helst side. Tærningen kan også lande på flere side på en gang hvis vi strekker definisjonen “å lande” langt nok. Alle disse mulighetene tilsier at vi kanskje ikke burde gjøre nettopp dette - strekke definisjoner hit eller dit. Derfor må det første vi gjør i vår undersøkelse være å definere <em>utfallsrommet</em> <span class="math inline">\(\Omega\)</span>. I dette eksempelet er vi bare intresert i tærningen om den lanner på en, og kun én, av sine seks sider. Utfallsrommet bilr dermed:</p>
+<p><span class="math display">\[
+\Omega = \{1,2,3,4,5,6\}
+\]</span> Merk notasjonen <span class="math inline">\(\{ \dots\}\)</span>. Dette betyr at utfallsrommet er et sett av mulige utfall og <em>ikke</em> tallene en til seks. Derfor kunne vi like godt definert <span class="math inline">\(\Omega\)</span> slik: $= {, , , , , } $. Denne notasjonen er identisk, dog noe kronglete. Derfor foretrekker vi den kortfattede første.</p>
+<p>Nå som utfallsrommet er definert kan vi gå videre. Dessverre er ikke dette tilstrekkelig for å vise at <span class="math inline">\(P(X = 1) = 1/6\)</span>. Altså at sannsynligheten for å kaste en ener er en sjettedel. For å konkludere det må vi komme med en siste antagelse, nemlig at det er like sannsynlig å lande på alle sider. Dette er i varierende grad opplagt for alle som har kastet tærninger. For eksempel i Yatzy er en sekser bare bedre enn en enere fordi seks er et høyere tall, og <em>ikke</em> fordi seks er mindre sannsynlig. på en annen side, det er heller ikke umulig at en tærning ikke er fullstendig rettferdig, og kanskje lander på én side bittelitt oftere. Vi unngår alle disse problemene elegant ved å anta at de ikke gjelder. Tærningen vår blir sånn sett ikke en ekte tærning, men en idé om en perfekt tærning, - på samme vis en sirkel tegnet med en passer ikke er en faktisk sirkel, bare en tilnærming. Tilbake til tærningen vet vi at alle sider er like sannsynlige, og fra kravet om at sannsynligheten må summére til én, kan vi sette opp følgende uttrykk:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(\Omega) &amp;= P(X = 1) + P(X = 2) + P(X = 3) + P(X = 4) + P(X = 5) + P(X = 6)\\
+&amp; = P(X = 1) + P(X = 1) + P(X = 1) + P(X = 1) + P(X = 1) + P(X = 1)\\
+&amp;= 6\cdot P(X = 1)
+\end{aligned}
+\]</span> Siden <span class="math inline">\(P(\Omega) = 1\)</span> forenkles uttrykket til: <span class="math display">\[
+1 =  6\cdot P(X = 1) \rightarrow P(X = 1) = 1/6
 \]</span></p>
-<p>Vi ser altså at den deriverte funksjoen til <span class="math inline">\(f(x)=x^2\)</span> er den lineære funksjoen <span class="math inline">\(f&#39;(x) = 2x\)</span>. Merk at den deriverte er en ny funksjon. Dette er fordi stigningstallet til <span class="math inline">\(f\)</span> endrer seg ettersom <span class="math inline">\(x\)</span> endrer seg. For akkurat denne funksjonen betyr det at den er dobbelt så bratt som x-verdien. Videre kan man tenke seg hvordan man kan derivere andre funksjoner, for eksempel <span class="math inline">\(f(x) = x^3\)</span> og så videre.</p>
+<p>og vi er dermed i mål og har vist hvorfor sannsynligheten for å kaste en ener er en sjettedel. På grunn av antagelsen om at alle sider er like sannsynlige, har vi samtidig vist det for alle andre sider.</p>
 </div>
 
 
