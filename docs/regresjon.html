@@ -57,6 +57,7 @@ if (window.hljs) {
 
 
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 
 
 
@@ -242,22 +243,19 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
-</li>
-<li>
   <a href="about.html">About</a>
 </li>
 <li>
-  <a href="calculus.html">Calculus</a>
-</li>
-<li>
-  <a href="hello.html">hello</a>
+  <a href="calculus.html">Kalkulus</a>
 </li>
 <li>
   <a href="sannsynlighet.html">Sannsynlighet</a>
 </li>
 <li>
   <a href="regresjon.html">Regresjon</a>
+</li>
+<li>
+  <a href="derivasjon.html">Derivasjon</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -348,7 +346,7 @@ def a_approx(x, y, b):
 ahat = a_approx(xs, ys, bhat)
 
 print(f&#39;a ={ahat: .2f}, b ={bhat: .2f}&#39;)</code></pre>
-<pre><code>&gt;&gt; a = 1.69, b = 2.78</code></pre>
+<pre><code>&gt;&gt; a = 1.99, b = 3.24</code></pre>
 <p>Vi ser at dette er ganske nærme det faktiske svaret. Vi kan plotte linjen også på følgende måte:</p>
 <pre class="python"><code>def linear_function(a, b):
   return lambda x: a + b*x
@@ -452,8 +450,10 @@ regression_line = linear_function(ahat, bhat)
 
 print(f&#39;a: {ahat}, b: {bhat}&#39;)</code></pre>
 <pre><code>&gt;&gt; a: -16.980420722183737, b: 0.09882216258914854</code></pre>
-<pre class="python"><code>plt.scatter(year, height)
-plt.plot(year, regression_line(year))</code></pre>
+<pre class="python"><code>plt.clf()
+plt.scatter(year, height)
+plt.plot(year, regression_line(year))
+plt.show()</code></pre>
 <p><img src="regresjon_files/figure-html/unnamed-chunk-12-15.png" width="672" /></p>
 <p>Vi ser at linjen passer nokså godt, men det virker ikke som om relasjonen vi leter etter er lineær. Det er flere grunner til å betvile denne antaglesen før vi i det hele tatt ser på dataen. For det første vil en lineær trend på et tidspunkt krysse null, men å tillate at snitthøyden er null er absurd. En lineær trend vil også antyde at vi kan vokse grenseløst høye, som også er lite trolig, dog ikke like absurd. Mer konkret kan vi tolke parameterne <span class="math inline">\(a\)</span> og <span class="math inline">\(b\)</span>, og de sier at i år 0 var snitthøyden minus 16 centimeter og at snitthøyden vokser med én millimeter per år.</p>
 <p>Vi kan prøve å tilpasse et polynom, det er en funksjon av n-te grad. Etter litt prøving og feiling ser det ut som en femtegradsfunksjon passer fint. Derimot kan vi i mye mindre grad tolke funksjonen utenfor datapunktene (dette kalles ekstrapolering)</p>
@@ -466,19 +466,114 @@ Xplot = np.linspace(year[0], year[-1], 100).reshape(-1, 1)
 y = height
 
 # plot training points
+plt.clf()
 plt.scatter(year, height, label=&quot;Data points&quot;)
 model = make_pipeline(PolynomialFeatures(5), Ridge(alpha=0.01)).fit(X, y)</code></pre>
 <pre><code>&gt;&gt; /opt/homebrew/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:156: LinAlgWarning: Ill-conditioned matrix (rcond=4.34857e-35): result may not be accurate.
 &gt;&gt;   return linalg.solve(A, Xy, sym_pos=True, overwrite_a=True).T</code></pre>
 <pre class="python"><code>yplot = model.predict(Xplot)
 plt.plot(Xplot, yplot, label=f&quot;degree {5}&quot;)
-plt.legend()</code></pre>
+plt.legend()
+plt.show()</code></pre>
 <p><img src="regresjon_files/figure-html/unnamed-chunk-13-17.png" width="672" /></p>
 <p>Hvis vi prøver på nytt å predikere hvor høye folk var i år null vil vi få et veldig rart svar:</p>
 <pre class="python"><code>print(f&#39;Predikert høyde i år 0: {int(model.predict( np.array([0]).reshape(1,-1))[0])} cm&#39;)</code></pre>
 <pre><code>&gt;&gt; Predikert høyde i år 0: 771785 cm</code></pre>
+<div id="uferdig-delkapittel" class="section level3">
+<h3>Uferdig delkapittel</h3>
+<pre class="python"><code>from scipy.optimize import minimize
+x_data = np.array(year)
+y_data = np.array(height)
+
+
+def logit(scale, speed, offset, height):
+    return lambda x:  height + scale/(1 + np.exp(-speed*(x + offset)))
+  
+def l2norm(f, x, y):
+  yhat = f(x)
+  return np.sum((y - yhat)**2)
+
+def to_optimize(params, x, y):
+  f = logit(*params)
+  return l2norm(f, x, y)
+  
+params = np.array([1, 1, -2000, 1]) #inital guess
+
+res = minimize(to_optimize, params, args=(x_data, y_data), method=&#39;BFGS&#39;)</code></pre>
+<pre><code>## &lt;string&gt;:2: RuntimeWarning: overflow encountered in exp</code></pre>
+<pre class="python"><code>params_found = res.x
+print(res.success)</code></pre>
+<pre><code>## True</code></pre>
+<pre class="python"><code>print(params_found)</code></pre>
+<pre><code>## [ -336.77241842    -7.165685   -1534.36573147   177.75882349]</code></pre>
+<pre class="python"><code>model = logit(*params_found)
+print(model(x_data))
+  </code></pre>
+<pre><code>## [177.75882349 177.75882349 177.75882349 177.75882349 177.75882349
+##  177.75882349 177.75882349 177.75882349 177.75882349 177.75882349
+##  177.75882349 177.75882349 177.75882349 177.75882349 177.75882349
+##  177.75882349 177.75882349 177.75882349 177.75882349 177.75882349
+##  177.75882349 177.75882349 177.75882349 177.75882349 177.75882349
+##  177.75882349 177.75882349 177.75882349 177.75882349 177.75882349
+##  177.75882349 177.75882349 177.75882349 177.75882349 177.75882349
+##  177.75882349 177.75882349 177.75882349 177.75882349 177.75882349
+##  177.75882349 177.75882349 177.75882349 177.75882349 177.75882349
+##  177.75882349 177.75882349 177.75882349 177.75882349 177.75882349
+##  177.75882349 177.75882349 177.75882349 177.75882349 177.75882349
+##  177.75882349 177.75882349 177.75882349 177.75882349 177.75882349
+##  177.75882349 177.75882349 177.75882349 177.75882349 177.75882349
+##  177.75882349 177.75882349 177.75882349]</code></pre>
+<pre class="python"><code>print(type(model))</code></pre>
+<pre><code>## &lt;class &#39;function&#39;&gt;</code></pre>
+<pre class="python"><code>
+params = np.array([1,1,-2,2])
+func = logit(*params)
+
+xs = np.linspace(-5,5,1000)
+ys = func(xs)
+
+plt.clf()
+plt.plot(xs, ys)
+plt.show()</code></pre>
+<p><img src="regresjon_files/figure-html/unnamed-chunk-16-19.png" width="672" /></p>
+<pre class="python"><code>x_mean = x_data.mean()
+y_mean = y_data.mean()
+
+x_centered = x_data - x_mean
+y_centered = y_data - y_mean
+
+res = minimize(to_optimize, params, args=(x_centered, y_centered), method=&#39;SLSQP&#39;)</code></pre>
+<pre><code>## &lt;string&gt;:2: RuntimeWarning: overflow encountered in exp</code></pre>
+<pre class="python"><code>params = res.x
+print(params)</code></pre>
+<pre><code>## [10.08800275  0.07101317 25.86467568 -7.82533576]</code></pre>
+<pre class="python"><code>plt.clf()
+manual_params = np.array([100,1,1, 100])
+plt.scatter(year, height, label=&quot;Data points&quot;)
+yplot = logit(*params)(xplot)
+yplotmanual = logit(*manual_params)(xplot)
+plt.plot(Xplot, yplot, label=f&#39;optmized&#39;)
+
+
+plt.legend()
+plt.show()</code></pre>
+<p><img src="regresjon_files/figure-html/unnamed-chunk-18-21.png" width="672" /></p>
+</div>
 </div>
 
+<style>
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  color: gray;
+  text-align: center;
+  font-family: Helvetica;
+}
+</style>
+<div class="footer">tronstad.even@gmail.com</div>
 
 
 

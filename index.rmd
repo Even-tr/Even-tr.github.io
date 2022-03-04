@@ -1,5 +1,5 @@
 ---
-title: "MathMathMath"
+title: "Even's Math notes"
 ---
     
 Welcome!

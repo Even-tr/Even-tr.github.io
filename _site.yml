@@ -1,8 +1,11 @@
-name: "MmM"
+name: "Notes"
 output_dir: "docs"
 output:
   html_document:
     theme: bootstrap
+    include:
+      after_body: footer.html
+    css: style.css
     
 # “default”, “bootstrap”, “cerulean”, “cosmo”, “darkly”, “flatly”, “journal”, 
 # “lumen”, “paper”, “readable”, “sandstone”, “simplex”, “spacelab”, “united”, “yeti”
@@ -10,15 +13,13 @@ output:
 navbar:
   title: "Hi!"
   left:
-    - text: "Home"
-      href: index.html
     - text: "About"
       href: about.html
-    - text: "Calculus"
+    - text: "Kalkulus"
       href: calculus.html
-    - text: "hello"
-      href: hello.html
     - text: "Sannsynlighet"
       href: sannsynlighet.html
     - text: "Regresjon"
       href: regresjon.html
+    - text: "Derivasjon"
+      href: derivasjon.html

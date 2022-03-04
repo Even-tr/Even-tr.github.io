@@ -240,8 +240,10 @@ ahat =a_approx(year, height, bhat)
 regression_line = linear_function(ahat, bhat)
 
 print(f'a: {ahat}, b: {bhat}')
+plt.clf()
 plt.scatter(year, height)
 plt.plot(year, regression_line(year))
+plt.show()
 ```
 
 
@@ -268,11 +270,13 @@ Xplot = np.linspace(year[0], year[-1], 100).reshape(-1, 1)
 y = height
 
 # plot training points
+plt.clf()
 plt.scatter(year, height, label="Data points")
 model = make_pipeline(PolynomialFeatures(5), Ridge(alpha=0.01)).fit(X, y)
 yplot = model.predict(Xplot)
 plt.plot(Xplot, yplot, label=f"degree {5}")
 plt.legend()
+plt.show()
 ```
 
 Hvis vi prøver på nytt å predikere hvor høye folk var i år null vil vi få et 
@@ -281,5 +285,77 @@ veldig rart svar:
 print(f'Predikert høyde i år 0: {int(model.predict( np.array([0]).reshape(1,-1))[0])} cm')
 ```
 
+
+### Uferdig delkapittel
+```{python}
+from scipy.optimize import minimize
+x_data = np.array(year)
+y_data = np.array(height)
+
+
+def logit(scale, speed, offset, height):
+    return lambda x:  height + scale/(1 + np.exp(-speed*(x + offset)))
+  
+def l2norm(f, x, y):
+  yhat = f(x)
+  return np.sum((y - yhat)**2)
+
+def to_optimize(params, x, y):
+  f = logit(*params)
+  return l2norm(f, x, y)
+  
+params = np.array([1, 1, -2000, 1]) #inital guess
+
+res = minimize(to_optimize, params, args=(x_data, y_data), method='BFGS')
+params_found = res.x
+print(res.success)
+print(params_found)
+
+model = logit(*params_found)
+print(model(x_data))
+  
+print(type(model))
+
+```
+
+```{python}
+
+params = np.array([1,1,-2,2])
+func = logit(*params)
+
+xs = np.linspace(-5,5,1000)
+ys = func(xs)
+
+plt.clf()
+plt.plot(xs, ys)
+plt.show()
+
+```
+
+```{python}
+x_mean = x_data.mean()
+y_mean = y_data.mean()
+
+x_centered = x_data - x_mean
+y_centered = y_data - y_mean
+
+res = minimize(to_optimize, params, args=(x_centered, y_centered), method='SLSQP')
+params = res.x
+print(params)
+
+```
+
+```{python}
+plt.clf()
+manual_params = np.array([100,1,1, 100])
+plt.scatter(year, height, label="Data points")
+yplot = logit(*params)(xplot)
+yplotmanual = logit(*manual_params)(xplot)
+plt.plot(Xplot, yplot, label=f'optmized')
+
+
+plt.legend()
+plt.show()
+```
 
 

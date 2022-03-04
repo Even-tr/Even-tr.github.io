@@ -1,0 +1,392 @@
+---
+  title: "Derivasjon"
+---
+\usepackage{amssymb}
+I denne artikkelen skal jeg gjennomgå og bevise en rekke derivasjonsregler.
+Først tar jeg meg for meg de generelle derivasjonreglene, etterfulgt av et utvalg
+spesielle derivasjonsregler. Bevisene hviler tungt på grenseverdier, som ikke er
+merkelig siden definisjonen av den deriverte er en grenseverdi.Denne definisjonen
+repeterer ejg først:
+
+\begin{align}
+\frac{\text{d}f}{\text{d}x} = \lim_{\Delta x\to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}
+\end{align}
+
+Vi kaller også gjerne den deriverte for $f'(x)$, lest "f-derivert av x" eller "f-prim". 
+Denne notasjonen er enklere og brukes gjerne der den er entydig. Dessverre er ikke
+det *alltid* tilfelle. Ett slikt eksempel skal vi møte på senere. Merk at den
+deriverte kun er definert der grenseverdien finnes. For eksempel har 
+$$
+f(x) = \frac{1}{x}
+$$
+
+ingen derivert i $x=0$.
+
+## Generelle derivasjonsregler
+
+De generelle derivasjonsreglene kjennetegnes at de antar ingenting om funksjonenen annet
+enn at de er deriverbare. Derfor gjelder de generelt. Du har sikkert allerede brukt
+flere av de uten å innse at de er regler. Alle de følgende reglene omhandler én eller
+to generelle funksjoner, og derfor er det hensiktsmessig å definere de. Vi ser altså
+på funksjonene $f(x)$ og $g(x)$. Begge de to har deriverte definert som følgende:
+
+\begin{align}
+f'(x) &= \lim_{\Delta x\to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}\\
+g'(x) &= \lim_{\Delta x\to 0} \frac{g(x + \Delta x) - g(x)}{\Delta x}
+\end{align}
+
+Hittil har vi bare sett på formaliteter, men nå kommer den første reglen: 
+
+### Addisjonssetningen
+
+Hvis vi skal derivere summen av to funksjoner, kan vi derivere komponentene hver for seg:
+
+$$
+(f(x) + g(x))' = f'(x) + g'(x) 
+$$
+
+Bevis:
+\begin{align}
+(f(x) + g(x))'&= \lim_{\Delta x\to 0} \frac{f(x + \Delta x) + g(x + \Delta x)  - f(x) - g(x)}{\Delta x}\\
+ & =  \lim_{\Delta x\to 0}\left( \frac{f(x + \Delta x) - f(x)}{\Delta x} + \frac{g(x + \Delta x) - g(x)}{\Delta x}\right)\\
+  & =  \lim_{\Delta x\to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x} + \lim_{\Delta x\to 0}\frac{g(x + \Delta x) - g(x)}{\Delta x}\\
+  &= f'(x) + g'(x) 
+\end{align}
+
+Linje 2 til 3
+kommer av at siden både $\lim_{\Delta x\to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}$ 
+og $\lim_{\Delta x\to 0}\frac{g(x + \Delta x) - g(x)}{\Delta x}$ sine grenseverdier 
+finnes, fordi vi antok det, kan vi distribuere $\lim$ operatoren over de og ta 
+grenseverdiene hver for seg. 
+
+
+### Produktsetningen
+Hvis en funksjon er produktet av to andre funksjoner, kan den derivers slik:
+
+$$
+(f(x)g(x))' = f'(x)g(x) + f(x)g'(x) 
+$$
+Altså summen av de to mulige måtene å derivere den éne faktoren og holde den 
+andre faktoren lik.
+
+Bevis:
+\begin{align}
+(f(x)g(x))'&= \lim_{\Delta x\to 0} \frac{f(x + \Delta x)  g(x + \Delta x)  - f(x) g(x)}{\Delta x}\\
+&= \lim_{\Delta x\to 0} \frac{f(x + \Delta x)  g(x + \Delta x)  - f(x) g(x) + f(x + \Delta x)g(x) - f(x + \Delta x)g(x)}{\Delta x}\\
+&= \lim_{\Delta x\to 0} \frac{f(x + \Delta x)  \left(g(x + \Delta x) -g(x) \right) + g(x)\left(f(x + \Delta x) -f(x)  \right)}{\Delta x}\\
+&= \lim_{\Delta x\to 0} \left( \frac{f(x + \Delta x)  \left(g(x + \Delta x) -g(x) \right)}{\Delta x} + \frac{ g(x)\left(f(x + \Delta x) -f(x)  \right)}{\Delta x}\right)\\
+&= \lim_{\Delta x\to 0} \frac{f(x + \Delta x)  \left(g(x + \Delta x) -g(x) \right)}{\Delta x} + \lim_{\Delta x\to 0} \frac{ g(x)\left(f(x + \Delta x) -f(x)  \right)}{\Delta x}\\
+&= \lim_{\Delta x\to 0} f(x + \Delta x)\frac{  g(x + \Delta x) -g(x) }{\Delta x} + \lim_{\Delta x\to 0} g(x) \frac{ f(x + \Delta x) -f(x)  }{\Delta x}\\
+&= \lim_{\Delta x\to 0} f(x + \Delta x)\lim_{\Delta x\to 0}\frac{ g(x + \Delta x) -g(x) }{\Delta x} + \lim_{\Delta x\to 0} g(x) \lim_{\Delta x\to 0}\frac{ f(x + \Delta x) -f(x)}{\Delta x}\\
+\end{align}
+
+Vi har nå fire forskjellige grenseverdier:
+
+$$
+\begin{align}
+\lim_{\Delta x\to 0} f(x + \Delta x) &,\quad \lim_{\Delta x\to 0}\frac{  g(x + \Delta x) -g(x) }{\Delta x}\\
+\lim_{\Delta x\to 0} g(x) &,\quad\lim_{\Delta x\to 0}\frac{ f(x + \Delta x) -f(x) }{\Delta x}
+\end{align}
+$$
+
+Vi ser at de to i venstre kolonne bare blir $f(x)$ og $g(x)$, og at venstre 
+kolonne er definisjonen av den deriverte for $f(x)$ og $g(x)$. Dermed ender vi
+opp med det ønskede resultatet:
+
+$$
+= f'(x)g(x) + f(x)g'(x) 
+$$
+
+Denne veggen av utregninger er mindre skremmende enn den kan først virke. Idéen er
+ganske enkel: På første linje bruker vi definisjonen av den deriverte, deretter legger
+vi til og trekker fra $f(x + \Delta x)g(x)$. Dette er et lite knep som muligjør 
+de etterfølgende forenklingene. Etter linje to er resten bare en øvelse i å
+omrokkere algebraiske uttrykk til vi ender opp med den ønskede formuleringen. 
+Den formuleringen er den siste linjen. Deretter tar vi grenseverdiene og ender
+opp med den generelle produktregelen.
+
+### Kjerneregelen
+
+Kjerneregelen er kanskje den mest beryktede derivasjonsregelen. Grunnen til dette
+tror jeg er at vi må *se på en funksjon som en variabel*. Det er ikke noe
+matematisk problematisk med dette, men det er fremmed første gang man møter det.
+Kjerneregelen brukes når vi deriverer en funksjon av en annen funksjon. Vi kan 
+skrive dette på flere måter. Den mest direkte er å skrve det slik:
+
+$$
+f(g(x))
+$$
+Men man kan også dele opp uttrykket i to:
+$$
+f(u), \quad u = g(x)
+$$
+
+Her ser vi at vi ikke trenger å se på det som en funksjon av en funksjon, men
+heller en funksjon av en annen variabel $u$, hvor $u$ er en funksjon av $x$. 
+Fordi vi nå har to forskjellige variabler, må vi bruke den mer omstendige formuleringen
+av den deriverte. Kjerneregelen sier da:
+$$
+\frac{\text{d}f(g(x))}{\text{d}x} = \frac{\text{d}f(u)}{\text{d}x} = \frac{\text{d}f(u)}{\text{d}u}\cdot \frac{\text{d}g(x)}{\text{d}x}
+$$
+Altså kan vi derivere den ytre funksjonen $f$ som om den ikke var en sammensatt funksjon, og
+deretter gange med den deriverte av kjernen $g'$.
+
+Bevis:
+
+\begin{align}
+\frac{\text{d}f(u)}{\text{d}x} &= \lim_{\Delta x \to 0} \frac{f(g(x)+\Delta x) - f(g(x))}{\Delta x}\\
+ &= \lim_{\Delta x \to 0} \frac{f(g(x)+\Delta x) - f(g(x))}{\Delta x}\cdot \frac{f(g(x)+\Delta x) - f(g(x))}{f(g(x)+\Delta x) - f(g(x))}\\
+&=\lim_{\Delta x \to 0} \frac{f(g(x+\Delta x)) - f(g(x))}{g(x + \Delta x) - g(x)} \cdot 
+\frac{g(x + \Delta x) - g(x)}{\Delta x}\\
+\end{align}
+
+Her ser vi en ny grenseverdi: Nemlig hva skjer med $f(g(x+ \Delta x))$ når $x$ går mot null?
+Her kan vi substituere $g(x)$ med en $u$. 
+
+Et knep vi skal bruke er en omdøping av uttrykket $g(x + \Delta x) - g(x)$. 
+Vi kan nemlig kalle denne differansen for $\Delta u$. Formelt blir det følgende:
+$$
+\Delta u = g(x + \Delta x) - g(x)
+$$
+Et veldig viktig poeng er at når $\Delta x$ går mot null, går også $\Delta u$
+mot null. Dette må være tilfelle fordi vi antar at $g$ kan deriveres. Da må grenseverdie under finnes:
+$$
+g'(x) = \lim_{\Delta x \to 0}\frac{g(x + \Delta x) - g(x)}{\Delta x} = \lim_{\Delta x \to 0}\frac{\Delta u}{\Delta x}
+$$
+og siden nevneren går mot null, må telleren også gå mot null. Om det ikke er tilfelle
+er ikke grenseverdien definert.
+
+
+Derfor kan vi dele opp grenseverdiene og substituere $g(x)$ med $u$ i den første. 
+
+
+\begin{align}
+\frac{\text{d}f(u)}{\text{d}x}&=\lim_{\Delta x \to 0} \frac{f(g(x+\Delta x)) - f(g(x))}{g(x + \Delta x) - g(x)} 
+\cdot\lim_{\Delta x \to 0} \frac{g(x + \Delta x) - g(x)}{\Delta x}\\
+&=\lim_{\Delta u \to 0} \frac{f(u + \Delta u) - f(u)}{\Delta u} 
+\cdot\lim_{\Delta x \to 0} \frac{g(x + \Delta x) - g(x)}{\Delta x}\\
+&= \frac{\text{d}f(u)}{\text{d}u} \cdot \frac{\text{d}g(x)}{\text{d}x}
+\end{align}
+
+Som er akkurat det vi leter etter.
+
+### Inversregelen
+Inversregelen er ikke en regel som undervises i norsk Skole. Den er heller ikke
+særlig interesant, men å bruke denne gjør kvotientregelen, som er den siste 
+generelle regelen vi skal se på, veldig enkel å bevise. Inversregelen sier følgende:
+
+$$
+\left(\frac{1}{f} \right)' = -\frac{f'}{f^2}
+$$
+For å bevise denne må vi først bevise en spesiell derivasjonsregel, nemlig:
+
+$$
+\left(\frac{1}{x} \right)' = -\frac{1}{x^2}
+$$
+Dette er fort gjort ved hjelp av definisjonen:
+
+
+\begin{align}
+\left(\frac{1}{x} \right)' &= \lim_{\Delta x \to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}\\
+&= \lim_{\Delta x \to 0} \frac{\frac{1}{x + \Delta x} - \frac{1}{x}}{\Delta x}\\
+&= \lim_{\Delta x \to 0} \frac{\frac{x - x -\Delta x}{x^2 + x\Delta x}}{\Delta x}\\
+&= \lim_{\Delta x \to 0} \frac{\frac{-\Delta x}{x^2 + x\Delta x}}{\Delta x}\\
+&= \lim_{\Delta x \to 0} -\frac{1}{x^2 + x\Delta x}\\
+&= -\frac{1}{x^2}
+\end{align}
+
+Nå som dette er bevist, kan vi enkelt bevise inversproblemet ved hjelp av kjerneregelen:
+
+
+\begin{align}
+\left(\frac{1}{g(x)} \right)' &= f(g(x))', \quad f(u) = \frac{1}{u}\\
+&= f'(u)\cdot g'(x)\\
+&= -\frac{1}{u^2} g'(x)\\
+&= -\frac{g(x)}{g'(x)^2}
+\end{align}
+
+Her så vi på $\frac{1}{g(x)}$ som en sammensatt funksjon. Dermed kunne vi bruke den deriverte
+til $\frac{1}{x}$, som vi fant over, som den ytre funksjonen.
+
+### Kvotientregelen
+
+Kvotientregelen trenger man rett som det er da det er ganske vanlig med funksjoner 
+som er brøker. Kort og greit sier den følgende:
+
+$$
+\left(\frac{f(x)}{g(x)}\right)' = \frac{f'(x)g(x) - f(x)g'(x)}{g(x)^2}
+$$
+Med alt forarbeidet over kan vi enkelt bevise dette:
+
+\begin{align}
+\left(\frac{f(x)}{g(x)}\right)' &= \left(f(x)\cdot\frac{1}{g(x)}\right)'\\
+&= f(x)\left(\frac{1}{g(x)}\right)' + f'(x)\frac{1}{g(x)}\\
+&= -\frac{f(x)g'(x)}{g(x)^2} +f'(x)\frac{g(x)}{g(x)^2}\\
+&= \frac{f'(x)g(x) - f(x)g'(x)}{g(x)^2}
+\end{align}
+
+Her brulte vi først produktregelen og som splittet funksjoen i to deler, én der
+vi deriverer $f$ og én der vi deriverer $\frac{1}{g(x)}$. Sistnevnte har vi allerede
+funnet, og vi putter inn løsningen. Deretter finner vi fellesnevner og er i mål.
+
+
+## Spesielle derivasjonsregler
+De spesielle derivasjosnreglene omhandler spesifikke funksjoner. Vi har allerede
+sett én av dem, nemlig at $\left(\frac{1}{x}\right)' = -frac{1}{x^2}$. Det finnes
+utallige slike regler, men vi skal bare ta for oss noen av de viktigste. Veldig
+mange problemer kan uttrykkes med kun et lite kneppe funksjoer, samt de generelle
+reglene vi lærte over. 
+
+### Polynomer og potensregelen
+Polynomer er funksjoer på formen $x^n$ der $n$ er et heltall tall eller en sum av 
+disse potensene. Vi ser at en funksjon er av *n-te grad* hvis den er et polynom 
+der $n$ er den høyeste potensen av alle. Disse funksjoene kan deriveres lett med
+*potensregelen* som sier følgende:
+
+$$
+(x^n)' = nx^{n-1}
+$$
+Altså er den deriverte til en n-tegradspolynom en ny polynom av én mindre grad. Jeg
+har allerede bevist dette for andregradspolynomer i min [introduksjon til kalkulus](calculus.html). For å gjøre dette generelt må vi ta en liten titt på
+potenser:
+
+Kvadratsetningen er velkjent og sier følgende:
+$$
+(a + b)^2 = a^2 + 2ab + b^2
+$$
+Det finnes en tilsvarende kubikksetning:
+
+$$
+(a + b)^3 = a^3 + 3a^2b + 3ab^2 + b^3
+$$
+Og en tilsvarende 'kvartett'setning:
+
+$$
+(a + b)^4 = a^4 + 4a^3b + 6a^2b^2 + 3ab^3 + b^4
+$$
+Og så videre (alle disse kan i teorien enkelt vises, men det er en plundrete jobb).
+Et obersvant øye har kanskje merket noen mønster. Først ser vi at den har en slags symmetri
+i at hva som er $a$ og hva som er $b$ er likegyldig. Vi ser at mens potensene til $a$
+synker med én hvert ledd mot høyre, så stiger potensene til $b$ tilsvarende én.
+Et noe vanskligere mønster å skimte er at konstanene følger [Pascals trekant](https://www.matematikk.org/artikkel.html?tid=64742) (hvorfor dette er tilfelle krever
+forklaring utover denne artikkelen). Vi ignorerer disse konstanene, og dermed kan vi skrive
+generelt at:
+
+$$
+(a+ b)^n = a^n + na^{n-1}b + k_1a^{n-2}b^2 + ... + k_1a^2b^{n-2} + nab^{n-1} +b^n
+$$
+
+Prikkene i midten betyr bare at det er en rekke ledd imellom som vi ikke bryr oss
+om. I denne formuleringen ser vi at vi kan faktorisere ut $b^2$ fra alle ledd som
+kommer etter $na^{n-1}b$. Da får vi følgende uttrykk:
+
+$$
+(a+ b)^n = a^n + na^{n-1}b + b^2\cdot\Sigma
+$$
+
+
+hvor $\Sigma$ bare er den samlede resten av summen. Dette er noe vi rett og slett
+ikke bryr oss noe om. Hvorfor dette er tilfelle kommer vi til nå da vi endelig
+skal bevise potensregelen. Vi begynner med å bruke definisjonen:
+
+\begin{align}
+f(x) &= x^n\\
+f'(x) &= \lim_{\Delta x \to 0} \frac{f(x+\Delta x) - f(x)}{\Delta x}\\
+    &=\lim_{\Delta x \to 0} \frac{(x+\Delta x)^n - x^n}{\Delta x}\\
+    &=\lim_{\Delta x \to 0} \frac{x^n nx^{n-1}\Delta x + (\Delta x)^2\Sigma - x^n}{\Delta x}\\
+    &=\lim_{\Delta x \to 0} \frac{nx^{n-1}\Delta x + (\Delta x)^2\Sigma}{\Delta x}\\
+    &=\lim_{\Delta x \to 0} nx^{n-1} + \Delta x\Sigma\\
+    &= nx^{n-1} \\
+\end{align}
+
+Denne utrgeningen forutsetter at $n$ er heltall. Dette er fordi vi ganger ut og
+faktoriserer potensen $(a+b)^n$, som ikke er mulig hvis $n$ er en brøk eller et 
+irrasjenlt tall. Likevel gjelder potensregelen generelt, foruten $n=0$. Altså hvis $n$ er et 
+hvilket som helst reelt tall utenom 0, kan man bruke den regelen. Å bevise dette
+for rasjonelle tall er noe vanskeligere, og å bevise det for reelle tall krever
+en ny vinkling på derivasjon som vi ikke skal ta for oss her.
+
+### Eksponentielle funksjoner
+Eksponentielle funksjoner er funksjoner der en konstant opphøyes i $x$. For eksempel
+er $f(x) = 2^x$ en eksponentiell funksjon. Denne funksjoen dobles hver gang $x$ øker
+med én: $f(x+1) = 2^{x+1} = 2\cdot 2^x = 2f(x)$. Slike funksjoner er veldig interessante
+i en rekke sitasjoner. Generelt er eksponentielle funksjoner på formen:
+
+$$
+f(x) = a^x, \quad a\in\mathbb{R}
+$$
+Vi skal nå se på hvordan disse deriveres, og hvorfor dette er nøkkelen til interessen.
+
+Vi bruker definisjonen av den deriverte og setter opp følgende uttrykk:
+
+\begin{align}
+f'(x) &= \lim_{\Delta x\to 0} \frac{a^{x+\Delta x} - a^x}{\Delta x}\\
+&=\lim_{\Delta x\to 0} \frac{a^{\Delta x}a^x - a^x}{\Delta x}\\
+&=\lim_{\Delta x\to 0} a^x\frac{a^{\Delta x}-1}{\Delta x}\\
+&=a^x\lim_{\Delta x\to 0} \frac{a^{\Delta x}-1}{\Delta x}\\
+\end{align}
+
+Merk hvorfor vi kan trekke $a^x$ ut av grenseverdien. Dette er fordi grensevrdien
+omhandler $\Delta x$ og *ikke* $x$. Derfor kan vi trekke $a^x$ ut og sitte igjen
+med et produkt av to faktorer hvor den første ikke er avhengig av $\Delta x$, og
+den andre ikke er avhengig av $x$. Det betyr at den deriverte til eksponentielle
+funksjoner er *proporsjonal* med den oprinnelige funksjonen. Konstanten er gitt
+av grenseverdien
+
+$$
+\lim_{\Delta x\to 0} \frac{a^{\Delta x}-1}{\Delta x} = \lim_{t\to 0} \frac{a^{t}-1}{t}
+$$
+Som faktisk er det samme som $\ln a$, altså den naturlige logaritmen / logaritmen
+med grunntall $e$. Denne påstanden skal nå bevises, men først må vi se litt på
+hva tallet $e$ er.
+
+$e$ er vanligvis definert som grenseverdien til følgende uttrykk:
+
+$$
+e = \lim_{n\to\infty}\left(1 + \frac{1}{n}\right)^n
+$$
+
+Dette konvergerer til omtrent $2.71828\dots$. Videre kan vi se at 
+\begin{align}
+e^x &= \lim_{n\to\infty}\left(\left(1 + \frac{1}{n}\right)^n\right)^x\\
+&=\lim_{n\to\infty}\left(1 + \frac{1}{n}\right)^{nx}\\
+&=\lim_{k\to\infty}\left(1 + \frac{x}{k}\right)^{k},\quad k = nx\\
+\end{align}
+
+Altså kan vi sette $x$ over $n$ inni parentesen. Denne definisjonen er videre ekvivalent med følgende:
+
+$$
+e = \lim_{t \to 0}\left(1 + t\right)^{1/t}
+$$
+
+Som vi heller bruker i denne sammenhengen. Den naturlige logaritmen til et tall $a$
+er definert som hvilket tall $e$ må opphøyes for å bli $a$. Med andre ord er det løsningen
+av likningen $e^x = a$. Formelt har vi:
+
+$$
+\ln a = x \leftrightarrow e^x = a
+$$
+Om vi erstatter $e$ med definisjoen vår vi følgende uttrykk:
+
+\begin{align}
+\ln a = x \leftrightarrow \lim_{t \to 0}\left(1 + t\right)^{x/t} &= a\\
+\lim_{t \to 0}\left(1 + xt\right) &= \lim_{t \to 0} a^t\\
+x &= \lim_{t \to 0} \frac{a^t - 1}{t}
+\end{align}
+
+Dette er *akkurat* det samme uttrykket som konstanten vi fant ovenfor, noe
+som betyr at hvis $a=e$, så er $\lim_{t \to 0} \frac{a^t - 1}{t} = 1$ fordi
+$\ln e = 1$ per definisjon ($e$ må opphøyes i én for å få $e$). Alt i alt
+gir dette de spesielle derivasjonsreglene:
+
+\begin{align}
+(e^x)' &= e^x\\
+(a^x)' &= a^x \ln a
+\end{align}
+
+*mer kommer*
+
+
+
+
+

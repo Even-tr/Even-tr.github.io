@@ -1,0 +1,33 @@
+---
+  title: "Hello"
+---
+  
+Heisann sveisann
+
+$$ f(x) = \frac{1}{x}$$
+
+```{r, include=FALSE}
+Sys.setenv(RETICULATE_PYTHON = "/opt/homebrew/bin/python3")
+library('reticulate')
+```
+
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+plt.figure()
+def f(x):
+  return x**2
+
+xs = np.linspace(-2,2,100)
+
+plt.plot(xs,f(xs))
+plt.show()
+
+```
+
+
+```{r}
+plot(cars)
+```
+

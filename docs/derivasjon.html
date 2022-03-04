@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Derivasjon</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Hi!</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="calculus.html">Kalkulus</a>
+</li>
+<li>
+  <a href="sannsynlighet.html">Sannsynlighet</a>
+</li>
+<li>
+  <a href="regresjon.html">Regresjon</a>
+</li>
+<li>
+  <a href="derivasjon.html">Derivasjon</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Derivasjon</h1>
+
+</div>
+
+
+<p>I denne artikkelen skal jeg gjennomgå og bevise en rekke derivasjonsregler. Først tar jeg meg for meg de generelle derivasjonreglene, etterfulgt av et utvalg spesielle derivasjonsregler. Bevisene hviler tungt på grenseverdier, som ikke er merkelig siden definisjonen av den deriverte er en grenseverdi.Denne definisjonen repeterer ejg først:</p>
+<p><span class="math display">\[\begin{align}
+\frac{\text{d}f}{\text{d}x} = \lim_{\Delta x\to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}
+\end{align}\]</span></p>
+<p>Vi kaller også gjerne den deriverte for <span class="math inline">\(f&#39;(x)\)</span>, lest “f-derivert av x” eller “f-prim”. Denne notasjonen er enklere og brukes gjerne der den er entydig. Dessverre er ikke det <em>alltid</em> tilfelle. Ett slikt eksempel skal vi møte på senere. Merk at den deriverte kun er definert der grenseverdien finnes. For eksempel har <span class="math display">\[
+f(x) = \frac{1}{x}
+\]</span></p>
+<p>ingen derivert i <span class="math inline">\(x=0\)</span>.</p>
+<div id="generelle-derivasjonsregler" class="section level2">
+<h2>Generelle derivasjonsregler</h2>
+<p>De generelle derivasjonsreglene kjennetegnes at de antar ingenting om funksjonenen annet enn at de er deriverbare. Derfor gjelder de generelt. Du har sikkert allerede brukt flere av de uten å innse at de er regler. Alle de følgende reglene omhandler én eller to generelle funksjoner, og derfor er det hensiktsmessig å definere de. Vi ser altså på funksjonene <span class="math inline">\(f(x)\)</span> og <span class="math inline">\(g(x)\)</span>. Begge de to har deriverte definert som følgende:</p>
+<p><span class="math display">\[\begin{align}
+f&#39;(x) &amp;= \lim_{\Delta x\to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}\\
+g&#39;(x) &amp;= \lim_{\Delta x\to 0} \frac{g(x + \Delta x) - g(x)}{\Delta x}
+\end{align}\]</span></p>
+<p>Hittil har vi bare sett på formaliteter, men nå kommer den første reglen:</p>
+<div id="addisjonssetningen" class="section level3">
+<h3>Addisjonssetningen</h3>
+<p>Hvis vi skal derivere summen av to funksjoner, kan vi derivere komponentene hver for seg:</p>
+<p><span class="math display">\[
+(f(x) + g(x))&#39; = f&#39;(x) + g&#39;(x) 
+\]</span></p>
+<p>Bevis: <span class="math display">\[\begin{align}
+(f(x) + g(x))&#39;&amp;= \lim_{\Delta x\to 0} \frac{f(x + \Delta x) + g(x + \Delta x)  - f(x) - g(x)}{\Delta x}\\
+ &amp; =  \lim_{\Delta x\to 0}\left( \frac{f(x + \Delta x) - f(x)}{\Delta x} + \frac{g(x + \Delta x) - g(x)}{\Delta x}\right)\\
+  &amp; =  \lim_{\Delta x\to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x} + \lim_{\Delta x\to 0}\frac{g(x + \Delta x) - g(x)}{\Delta x}\\
+  &amp;= f&#39;(x) + g&#39;(x) 
+\end{align}\]</span></p>
+<p>Linje 2 til 3 kommer av at siden både <span class="math inline">\(\lim_{\Delta x\to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}\)</span> og <span class="math inline">\(\lim_{\Delta x\to 0}\frac{g(x + \Delta x) - g(x)}{\Delta x}\)</span> sine grenseverdier finnes, fordi vi antok det, kan vi distribuere <span class="math inline">\(\lim\)</span> operatoren over de og ta grenseverdiene hver for seg.</p>
+</div>
+<div id="produktsetningen" class="section level3">
+<h3>Produktsetningen</h3>
+<p>Hvis en funksjon er produktet av to andre funksjoner, kan den derivers slik:</p>
+<p><span class="math display">\[
+(f(x)g(x))&#39; = f&#39;(x)g(x) + f(x)g&#39;(x) 
+\]</span> Altså summen av de to mulige måtene å derivere den éne faktoren og holde den andre faktoren lik.</p>
+<p>Bevis: <span class="math display">\[\begin{align}
+(f(x)g(x))&#39;&amp;= \lim_{\Delta x\to 0} \frac{f(x + \Delta x)  g(x + \Delta x)  - f(x) g(x)}{\Delta x}\\
+&amp;= \lim_{\Delta x\to 0} \frac{f(x + \Delta x)  g(x + \Delta x)  - f(x) g(x) + f(x + \Delta x)g(x) - f(x + \Delta x)g(x)}{\Delta x}\\
+&amp;= \lim_{\Delta x\to 0} \frac{f(x + \Delta x)  \left(g(x + \Delta x) -g(x) \right) + g(x)\left(f(x + \Delta x) -f(x)  \right)}{\Delta x}\\
+&amp;= \lim_{\Delta x\to 0} \left( \frac{f(x + \Delta x)  \left(g(x + \Delta x) -g(x) \right)}{\Delta x} + \frac{ g(x)\left(f(x + \Delta x) -f(x)  \right)}{\Delta x}\right)\\
+&amp;= \lim_{\Delta x\to 0} \frac{f(x + \Delta x)  \left(g(x + \Delta x) -g(x) \right)}{\Delta x} + \lim_{\Delta x\to 0} \frac{ g(x)\left(f(x + \Delta x) -f(x)  \right)}{\Delta x}\\
+&amp;= \lim_{\Delta x\to 0} f(x + \Delta x)\frac{  g(x + \Delta x) -g(x) }{\Delta x} + \lim_{\Delta x\to 0} g(x) \frac{ f(x + \Delta x) -f(x)  }{\Delta x}\\
+&amp;= \lim_{\Delta x\to 0} f(x + \Delta x)\lim_{\Delta x\to 0}\frac{ g(x + \Delta x) -g(x) }{\Delta x} + \lim_{\Delta x\to 0} g(x) \lim_{\Delta x\to 0}\frac{ f(x + \Delta x) -f(x)}{\Delta x}\\
+\end{align}\]</span></p>
+<p>Vi har nå fire forskjellige grenseverdier:</p>
+<p><span class="math display">\[
+\begin{align}
+\lim_{\Delta x\to 0} f(x + \Delta x) &amp;,\quad \lim_{\Delta x\to 0}\frac{  g(x + \Delta x) -g(x) }{\Delta x}\\
+\lim_{\Delta x\to 0} g(x) &amp;,\quad\lim_{\Delta x\to 0}\frac{ f(x + \Delta x) -f(x) }{\Delta x}
+\end{align}
+\]</span></p>
+<p>Vi ser at de to i venstre kolonne bare blir <span class="math inline">\(f(x)\)</span> og <span class="math inline">\(g(x)\)</span>, og at venstre kolonne er definisjonen av den deriverte for <span class="math inline">\(f(x)\)</span> og <span class="math inline">\(g(x)\)</span>. Dermed ender vi opp med det ønskede resultatet:</p>
+<p><span class="math display">\[
+= f&#39;(x)g(x) + f(x)g&#39;(x) 
+\]</span></p>
+<p>Denne veggen av utregninger er mindre skremmende enn den kan først virke. Idéen er ganske enkel: På første linje bruker vi definisjonen av den deriverte, deretter legger vi til og trekker fra <span class="math inline">\(f(x + \Delta x)g(x)\)</span>. Dette er et lite knep som muligjør de etterfølgende forenklingene. Etter linje to er resten bare en øvelse i å omrokkere algebraiske uttrykk til vi ender opp med den ønskede formuleringen. Den formuleringen er den siste linjen. Deretter tar vi grenseverdiene og ender opp med den generelle produktregelen.</p>
+</div>
+<div id="kjerneregelen" class="section level3">
+<h3>Kjerneregelen</h3>
+<p>Kjerneregelen er kanskje den mest beryktede derivasjonsregelen. Grunnen til dette tror jeg er at vi må <em>se på en funksjon som en variabel</em>. Det er ikke noe matematisk problematisk med dette, men det er fremmed første gang man møter det. Kjerneregelen brukes når vi deriverer en funksjon av en annen funksjon. Vi kan skrive dette på flere måter. Den mest direkte er å skrve det slik:</p>
+<p><span class="math display">\[
+f(g(x))
+\]</span> Men man kan også dele opp uttrykket i to: <span class="math display">\[
+f(u), \quad u = g(x)
+\]</span></p>
+<p>Her ser vi at vi ikke trenger å se på det som en funksjon av en funksjon, men heller en funksjon av en annen variabel <span class="math inline">\(u\)</span>, hvor <span class="math inline">\(u\)</span> er en funksjon av <span class="math inline">\(x\)</span>. Fordi vi nå har to forskjellige variabler, må vi bruke den mer omstendige formuleringen av den deriverte. Kjerneregelen sier da: <span class="math display">\[
+\frac{\text{d}f(g(x))}{\text{d}x} = \frac{\text{d}f(u)}{\text{d}x} = \frac{\text{d}f(u)}{\text{d}u}\cdot \frac{\text{d}g(x)}{\text{d}x}
+\]</span> Altså kan vi derivere den ytre funksjonen <span class="math inline">\(f\)</span> som om den ikke var en sammensatt funksjon, og deretter gange med den deriverte av kjernen <span class="math inline">\(g&#39;\)</span>.</p>
+<p>Bevis:</p>
+<p><span class="math display">\[\begin{align}
+\frac{\text{d}f(u)}{\text{d}x} &amp;= \lim_{\Delta x \to 0} \frac{f(g(x)+\Delta x) - f(g(x))}{\Delta x}\\
+ &amp;= \lim_{\Delta x \to 0} \frac{f(g(x)+\Delta x) - f(g(x))}{\Delta x}\cdot \frac{f(g(x)+\Delta x) - f(g(x))}{f(g(x)+\Delta x) - f(g(x))}\\
+&amp;=\lim_{\Delta x \to 0} \frac{f(g(x+\Delta x)) - f(g(x))}{g(x + \Delta x) - g(x)} \cdot 
+\frac{g(x + \Delta x) - g(x)}{\Delta x}\\
+\end{align}\]</span></p>
+<p>Her ser vi en ny grenseverdi: Nemlig hva skjer med <span class="math inline">\(f(g(x+ \Delta x))\)</span> når <span class="math inline">\(x\)</span> går mot null? Her kan vi substituere <span class="math inline">\(g(x)\)</span> med en <span class="math inline">\(u\)</span>.</p>
+<p>Et knep vi skal bruke er en omdøping av uttrykket <span class="math inline">\(g(x + \Delta x) - g(x)\)</span>. Vi kan nemlig kalle denne differansen for <span class="math inline">\(\Delta u\)</span>. Formelt blir det følgende: <span class="math display">\[
+\Delta u = g(x + \Delta x) - g(x)
+\]</span> Et veldig viktig poeng er at når <span class="math inline">\(\Delta x\)</span> går mot null, går også <span class="math inline">\(\Delta u\)</span> mot null. Dette må være tilfelle fordi vi antar at <span class="math inline">\(g\)</span> kan deriveres. Da må grenseverdie under finnes: <span class="math display">\[
+g&#39;(x) = \lim_{\Delta x \to 0}\frac{g(x + \Delta x) - g(x)}{\Delta x} = \lim_{\Delta x \to 0}\frac{\Delta u}{\Delta x}
+\]</span> og siden nevneren går mot null, må telleren også gå mot null. Om det ikke er tilfelle er ikke grenseverdien definert.</p>
+<p>Derfor kan vi dele opp grenseverdiene og substituere <span class="math inline">\(g(x)\)</span> med <span class="math inline">\(u\)</span> i den første.</p>
+<p><span class="math display">\[\begin{align}
+\frac{\text{d}f(u)}{\text{d}x}&amp;=\lim_{\Delta x \to 0} \frac{f(g(x+\Delta x)) - f(g(x))}{g(x + \Delta x) - g(x)} 
+\cdot\lim_{\Delta x \to 0} \frac{g(x + \Delta x) - g(x)}{\Delta x}\\
+&amp;=\lim_{\Delta u \to 0} \frac{f(u + \Delta u) - f(u)}{\Delta u} 
+\cdot\lim_{\Delta x \to 0} \frac{g(x + \Delta x) - g(x)}{\Delta x}\\
+&amp;= \frac{\text{d}f(u)}{\text{d}u} \cdot \frac{\text{d}g(x)}{\text{d}x}
+\end{align}\]</span></p>
+<p>Som er akkurat det vi leter etter.</p>
+</div>
+<div id="inversregelen" class="section level3">
+<h3>Inversregelen</h3>
+<p>Inversregelen er ikke en regel som undervises i norsk Skole. Den er heller ikke særlig interesant, men å bruke denne gjør kvotientregelen, som er den siste generelle regelen vi skal se på, veldig enkel å bevise. Inversregelen sier følgende:</p>
+<p><span class="math display">\[
+\left(\frac{1}{f} \right)&#39; = -\frac{f&#39;}{f^2}
+\]</span> For å bevise denne må vi først bevise en spesiell derivasjonsregel, nemlig:</p>
+<p><span class="math display">\[
+\left(\frac{1}{x} \right)&#39; = -\frac{1}{x^2}
+\]</span> Dette er fort gjort ved hjelp av definisjonen:</p>
+<p><span class="math display">\[\begin{align}
+\left(\frac{1}{x} \right)&#39; &amp;= \lim_{\Delta x \to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}\\
+&amp;= \lim_{\Delta x \to 0} \frac{\frac{1}{x + \Delta x} - \frac{1}{x}}{\Delta x}\\
+&amp;= \lim_{\Delta x \to 0} \frac{\frac{x - x -\Delta x}{x^2 + x\Delta x}}{\Delta x}\\
+&amp;= \lim_{\Delta x \to 0} \frac{\frac{-\Delta x}{x^2 + x\Delta x}}{\Delta x}\\
+&amp;= \lim_{\Delta x \to 0} -\frac{1}{x^2 + x\Delta x}\\
+&amp;= -\frac{1}{x^2}
+\end{align}\]</span></p>
+<p>Nå som dette er bevist, kan vi enkelt bevise inversproblemet ved hjelp av kjerneregelen:</p>
+<p><span class="math display">\[\begin{align}
+\left(\frac{1}{g(x)} \right)&#39; &amp;= f(g(x))&#39;, \quad f(u) = \frac{1}{u}\\
+&amp;= f&#39;(u)\cdot g&#39;(x)\\
+&amp;= -\frac{1}{u^2} g&#39;(x)\\
+&amp;= -\frac{g(x)}{g&#39;(x)^2}
+\end{align}\]</span></p>
+<p>Her så vi på <span class="math inline">\(\frac{1}{g(x)}\)</span> som en sammensatt funksjon. Dermed kunne vi bruke den deriverte til <span class="math inline">\(\frac{1}{x}\)</span>, som vi fant over, som den ytre funksjonen.</p>
+</div>
+<div id="kvotientregelen" class="section level3">
+<h3>Kvotientregelen</h3>
+<p>Kvotientregelen trenger man rett som det er da det er ganske vanlig med funksjoner som er brøker. Kort og greit sier den følgende:</p>
+<p><span class="math display">\[
+\left(\frac{f(x)}{g(x)}\right)&#39; = \frac{f&#39;(x)g(x) - f(x)g&#39;(x)}{g(x)^2}
+\]</span> Med alt forarbeidet over kan vi enkelt bevise dette:</p>
+<p><span class="math display">\[\begin{align}
+\left(\frac{f(x)}{g(x)}\right)&#39; &amp;= \left(f(x)\cdot\frac{1}{g(x)}\right)&#39;\\
+&amp;= f(x)\left(\frac{1}{g(x)}\right)&#39; + f&#39;(x)\frac{1}{g(x)}\\
+&amp;= -\frac{f(x)g&#39;(x)}{g(x)^2} +f&#39;(x)\frac{g(x)}{g(x)^2}\\
+&amp;= \frac{f&#39;(x)g(x) - f(x)g&#39;(x)}{g(x)^2}
+\end{align}\]</span></p>
+<p>Her brulte vi først produktregelen og som splittet funksjoen i to deler, én der vi deriverer <span class="math inline">\(f\)</span> og én der vi deriverer <span class="math inline">\(\frac{1}{g(x)}\)</span>. Sistnevnte har vi allerede funnet, og vi putter inn løsningen. Deretter finner vi fellesnevner og er i mål.</p>
+</div>
+</div>
+<div id="spesielle-derivasjonsregler" class="section level2">
+<h2>Spesielle derivasjonsregler</h2>
+<p>De spesielle derivasjosnreglene omhandler spesifikke funksjoner. Vi har allerede sett én av dem, nemlig at <span class="math inline">\(\left(\frac{1}{x}\right)&#39; = -frac{1}{x^2}\)</span>. Det finnes utallige slike regler, men vi skal bare ta for oss noen av de viktigste. Veldig mange problemer kan uttrykkes med kun et lite kneppe funksjoer, samt de generelle reglene vi lærte over.</p>
+<div id="polynomer-og-potensregelen" class="section level3">
+<h3>Polynomer og potensregelen</h3>
+<p>Polynomer er funksjoer på formen <span class="math inline">\(x^n\)</span> der <span class="math inline">\(n\)</span> er et heltall tall eller en sum av disse potensene. Vi ser at en funksjon er av <em>n-te grad</em> hvis den er et polynom der <span class="math inline">\(n\)</span> er den høyeste potensen av alle. Disse funksjoene kan deriveres lett med <em>potensregelen</em> som sier følgende:</p>
+<p><span class="math display">\[
+(x^n)&#39; = nx^{n-1}
+\]</span> Altså er den deriverte til en n-tegradspolynom en ny polynom av én mindre grad. Jeg har allerede bevist dette for andregradspolynomer i min <a href="calculus.html">introduksjon til kalkulus</a>. For å gjøre dette generelt må vi ta en liten titt på potenser:</p>
+<p>Kvadratsetningen er velkjent og sier følgende: <span class="math display">\[
+(a + b)^2 = a^2 + 2ab + b^2
+\]</span> Det finnes en tilsvarende kubikksetning:</p>
+<p><span class="math display">\[
+(a + b)^3 = a^3 + 3a^2b + 3ab^2 + b^3
+\]</span> Og en tilsvarende ’kvartett’setning:</p>
+<p><span class="math display">\[
+(a + b)^4 = a^4 + 4a^3b + 6a^2b^2 + 3ab^3 + b^4
+\]</span> Og så videre (alle disse kan i teorien enkelt vises, men det er en plundrete jobb). Et obersvant øye har kanskje merket noen mønster. Først ser vi at den har en slags symmetri i at hva som er <span class="math inline">\(a\)</span> og hva som er <span class="math inline">\(b\)</span> er likegyldig. Vi ser at mens potensene til <span class="math inline">\(a\)</span> synker med én hvert ledd mot høyre, så stiger potensene til <span class="math inline">\(b\)</span> tilsvarende én. Et noe vanskligere mønster å skimte er at konstanene følger <a href="https://www.matematikk.org/artikkel.html?tid=64742">Pascals trekant</a> (hvorfor dette er tilfelle krever forklaring utover denne artikkelen). Vi ignorerer disse konstanene, og dermed kan vi skrive generelt at:</p>
+<p><span class="math display">\[
+(a+ b)^n = a^n + na^{n-1}b + k_1a^{n-2}b^2 + ... + k_1a^2b^{n-2} + nab^{n-1} +b^n
+\]</span></p>
+<p>Prikkene i midten betyr bare at det er en rekke ledd imellom som vi ikke bryr oss om. I denne formuleringen ser vi at vi kan faktorisere ut <span class="math inline">\(b^2\)</span> fra alle ledd som kommer etter <span class="math inline">\(na^{n-1}b\)</span>. Da får vi følgende uttrykk:</p>
+<p><span class="math display">\[
+(a+ b)^n = a^n + na^{n-1}b + b^2\cdot\Sigma
+\]</span></p>
+<p>hvor <span class="math inline">\(\Sigma\)</span> bare er den samlede resten av summen. Dette er noe vi rett og slett ikke bryr oss noe om. Hvorfor dette er tilfelle kommer vi til nå da vi endelig skal bevise potensregelen. Vi begynner med å bruke definisjonen:</p>
+<p><span class="math display">\[\begin{align}
+f(x) &amp;= x^n\\
+f&#39;(x) &amp;= \lim_{\Delta x \to 0} \frac{f(x+\Delta x) - f(x)}{\Delta x}\\
+    &amp;=\lim_{\Delta x \to 0} \frac{(x+\Delta x)^n - x^n}{\Delta x}\\
+    &amp;=\lim_{\Delta x \to 0} \frac{x^n nx^{n-1}\Delta x + (\Delta x)^2\Sigma - x^n}{\Delta x}\\
+    &amp;=\lim_{\Delta x \to 0} \frac{nx^{n-1}\Delta x + (\Delta x)^2\Sigma}{\Delta x}\\
+    &amp;=\lim_{\Delta x \to 0} nx^{n-1} + \Delta x\Sigma\\
+    &amp;= nx^{n-1} \\
+\end{align}\]</span></p>
+<p>Denne utrgeningen forutsetter at <span class="math inline">\(n\)</span> er heltall. Dette er fordi vi ganger ut og faktoriserer potensen <span class="math inline">\((a+b)^n\)</span>, som ikke er mulig hvis <span class="math inline">\(n\)</span> er en brøk eller et irrasjenlt tall. Likevel gjelder potensregelen generelt, foruten <span class="math inline">\(n=0\)</span>. Altså hvis <span class="math inline">\(n\)</span> er et hvilket som helst reelt tall utenom 0, kan man bruke den regelen. Å bevise dette for rasjonelle tall er noe vanskeligere, og å bevise det for reelle tall krever en ny vinkling på derivasjon som vi ikke skal ta for oss her.</p>
+</div>
+<div id="eksponentielle-funksjoner" class="section level3">
+<h3>Eksponentielle funksjoner</h3>
+<p>Eksponentielle funksjoner er funksjoner der en konstant opphøyes i <span class="math inline">\(x\)</span>. For eksempel er <span class="math inline">\(f(x) = 2^x\)</span> en eksponentiell funksjon. Denne funksjoen dobles hver gang <span class="math inline">\(x\)</span> øker med én: <span class="math inline">\(f(x+1) = 2^{x+1} = 2\cdot 2^x = 2f(x)\)</span>. Slike funksjoner er veldig interessante i en rekke sitasjoner. Generelt er eksponentielle funksjoner på formen:</p>
+<p><span class="math display">\[
+f(x) = a^x, \quad a\in\mathbb{R}
+\]</span> Vi skal nå se på hvordan disse deriveres, og hvorfor dette er nøkkelen til interessen.</p>
+<p>Vi bruker definisjonen av den deriverte og setter opp følgende uttrykk:</p>
+<p><span class="math display">\[\begin{align}
+f&#39;(x) &amp;= \lim_{\Delta x\to 0} \frac{a^{x+\Delta x} - a^x}{\Delta x}\\
+&amp;=\lim_{\Delta x\to 0} \frac{a^{\Delta x}a^x - a^x}{\Delta x}\\
+&amp;=\lim_{\Delta x\to 0} a^x\frac{a^{\Delta x}-1}{\Delta x}\\
+&amp;=a^x\lim_{\Delta x\to 0} \frac{a^{\Delta x}-1}{\Delta x}\\
+\end{align}\]</span></p>
+<p>Merk hvorfor vi kan trekke <span class="math inline">\(a^x\)</span> ut av grenseverdien. Dette er fordi grensevrdien omhandler <span class="math inline">\(\Delta x\)</span> og <em>ikke</em> <span class="math inline">\(x\)</span>. Derfor kan vi trekke <span class="math inline">\(a^x\)</span> ut og sitte igjen med et produkt av to faktorer hvor den første ikke er avhengig av <span class="math inline">\(\Delta x\)</span>, og den andre ikke er avhengig av <span class="math inline">\(x\)</span>. Det betyr at den deriverte til eksponentielle funksjoner er <em>proporsjonal</em> med den oprinnelige funksjonen. Konstanten er gitt av grenseverdien</p>
+<p><span class="math display">\[
+\lim_{\Delta x\to 0} \frac{a^{\Delta x}-1}{\Delta x} = \lim_{t\to 0} \frac{a^{t}-1}{t}
+\]</span> Som faktisk er det samme som <span class="math inline">\(\ln a\)</span>, altså den naturlige logaritmen / logaritmen med grunntall <span class="math inline">\(e\)</span>. Denne påstanden skal nå bevises, men først må vi se litt på hva tallet <span class="math inline">\(e\)</span> er.</p>
+<p><span class="math inline">\(e\)</span> er vanligvis definert som grenseverdien til følgende uttrykk:</p>
+<p><span class="math display">\[
+e = \lim_{n\to\infty}\left(1 + \frac{1}{n}\right)^n
+\]</span></p>
+<p>Dette konvergerer til omtrent <span class="math inline">\(2.71828\dots\)</span>. Videre kan vi se at <span class="math display">\[\begin{align}
+e^x &amp;= \lim_{n\to\infty}\left(\left(1 + \frac{1}{n}\right)^n\right)^x\\
+&amp;=\lim_{n\to\infty}\left(1 + \frac{1}{n}\right)^{nx}\\
+&amp;=\lim_{k\to\infty}\left(1 + \frac{x}{k}\right)^{k},\quad k = nx\\
+\end{align}\]</span></p>
+<p>Altså kan vi sette <span class="math inline">\(x\)</span> over <span class="math inline">\(n\)</span> inni parentesen. Denne definisjonen er videre ekvivalent med følgende:</p>
+<p><span class="math display">\[
+e = \lim_{t \to 0}\left(1 + t\right)^{1/t}
+\]</span></p>
+<p>Som vi heller bruker i denne sammenhengen. Den naturlige logaritmen til et tall <span class="math inline">\(a\)</span> er definert som hvilket tall <span class="math inline">\(e\)</span> må opphøyes for å bli <span class="math inline">\(a\)</span>. Med andre ord er det løsningen av likningen <span class="math inline">\(e^x = a\)</span>. Formelt har vi:</p>
+<p><span class="math display">\[
+\ln a = x \leftrightarrow e^x = a
+\]</span> Om vi erstatter <span class="math inline">\(e\)</span> med definisjoen vår vi følgende uttrykk:</p>
+<p><span class="math display">\[\begin{align}
+\ln a = x \leftrightarrow \lim_{t \to 0}\left(1 + t\right)^{x/t} &amp;= a\\
+\lim_{t \to 0}\left(1 + xt\right) &amp;= \lim_{t \to 0} a^t\\
+x &amp;= \lim_{t \to 0} \frac{a^t - 1}{t}
+\end{align}\]</span></p>
+<p>Dette er <em>akkurat</em> det samme uttrykket som konstanten vi fant ovenfor, noe som betyr at hvis <span class="math inline">\(a=e\)</span>, så er <span class="math inline">\(\lim_{t \to 0} \frac{a^t - 1}{t} = 1\)</span> fordi <span class="math inline">\(\ln e = 1\)</span> per definisjon (<span class="math inline">\(e\)</span> må opphøyes i én for å få <span class="math inline">\(e\)</span>). Alt i alt gir dette de spesielle derivasjonsreglene:</p>
+<p><span class="math display">\[\begin{align}
+(e^x)&#39; &amp;= e^x\\
+(a^x)&#39; &amp;= a^x \ln a
+\end{align}\]</span></p>
+<p><em>mer kommer</em></p>
+</div>
+</div>
+
+<style>
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  color: gray;
+  text-align: center;
+  font-family: Helvetica;
+}
+</style>
+<div class="footer">tronstad.even@gmail.com</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
