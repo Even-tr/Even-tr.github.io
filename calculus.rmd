@@ -4,9 +4,10 @@ title: "Kalkulus"
 
 # Introduksjon
 
-Da jeg først lærte om kalkulus på skolen var ikke klar over at
-det var tilfelle. Jeg tror ikke jeg er er den eneste som opplevde dette. Hvis du
-leser denne artikkelen er det mulig at du enda ikke vet at du lærer kalkulus.
+Da jeg først lærte kalkulus på skolen var jeg ikke klar over det. Jeg lærte ting
+som grenseverdier, derivasjon og integrasjon og tenkte at det vat det. I ettertid
+har jeg oppdaget at dette er det vi kjenner som kalkulus. Et ellers fremmed og
+skremmende begrep er egentlig bare fellesnevneren til disse enklere temaene.
 
 Kort fortalt er kalkulus derivasjon og integrasjon, men for å gjennomføre disse
 operasjonene kreves funksjoner, grenseverdier og uendelige følger og rekker. 
