@@ -10,7 +10,7 @@ som omhandler sirklær bevegelse og mekanisk energi.
 
 Vi ser først på sirkulære baner.
 
-## Sirklære baner
+## Sirkulære baner
 Newtons gravitasjonslov sier følgende:
 
 $$ F_g = \gamma\frac{mM}{r^2}$$
