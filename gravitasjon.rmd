@@ -1,0 +1,93 @@
+---
+  title: "Gravitasjon"
+  subtitle: 'Fysikk 2 eksamensøving'
+---
+
+I denne artikkelen skal vi se litt på gravitasjon. Vi skal utlede banefart til
+objekter i sirkulær bane, samt unnslippningshastigheten. Vi skal gjøre dette fra
+enkle og kjente lover, nemlig Newtons lover, Newtons gravitasjonslov, samt noen flere
+som omhandler sirklær bevegelse og mekanisk energi.
+
+Vi ser først på sirkulære baner.
+
+## Sirklære baner
+Newtons gravitasjonslov sier følgende:
+
+$$ F_g = \gamma\frac{mM}{r^2}$$
+
+* $m$ er massen til objektet i bane 
+* $M$ er massen til legemet den går i banerundt. 
+* $r$ er radiusen/avstanden mellom massesentrumene til de do objektene. 
+* $\gamma$ er Newtons gravitasjonskonstant. 
+
+Videre må vi se på sentripetalakselerasjon som kan formuleres som følgende:
+
+$$ a =\frac{v^2}{r}$$
+
+* $a$ er akselerasjonen som alltid står normalt på hastigheten til legemet
+* $v$ er banefarten
+* $r$ er radien til sirkelbanen
+
+Siden tyngdekraften alltid trekker legemet mot massesenteret, og siden sentripetalakselerasjon
+krever en akselerasjon parallelt med radien, kan vi sette disse lik hverandre. Før
+vi gjør dette derimot må vi *oversette* sentripetalakselerasjonen til en
+sentripetalkraft. Dette gjøres lett med Newtons første lov:
+
+$$ F = ma$$
+
+Som gir følgende sentripetalkraft:
+
+$$ F_s = m\frac{v^2}{r}$$
+
+Nå kan vi sette opp likningen:
+
+
+\begin{align}
+F_g &= F_s \\
+\gamma\frac{mM}{r^2} &=m\frac{v^2}{r}\\
+\gamma\frac{M}{r} &= v^2\\
+v &= \sqrt{\frac{\gamma M}{r}}\
+\end{align}
+
+Vi ser at banefarten er kun avhengig av Newtons gravitasjonskonstant, som er en universell,
+massen til planeten/stjernen som legemet går i banen rundt, og radien til banen.
+Altså er massen til legemet ikke relevant, noe som er typisk for bevegelse i gravitasjonsfelt
+der det ikke er noen motstand i form av friksjon eller luftmotsand (eller elektrisk, magnietisk etc.).
+
+## Unnslipningshastighet
+For å finne unnslipningshastigheten, den minste hastigheten et legeme må ha for å
+"unnslippe" gravitasjonsbrønnen til en planet, må vi gå veien om mekanisk energi.
+Grunnen til dette er at ordet "brønn" er på mange måter en god analogi. Hvis
+vi bruker en trampoline med en bowling kule som analogi, er bowlingkulens 
+gravitasjonsbrønn den faktiske dalen som kulen tvinger trampolinen til å danne.
+Vi kan nå forestille oss en klinkekule som triller uten friksjon rundt denne kulen,
+og dette vil være et legeme i bane. I seksjonen over så  vi på hvilken fart
+denne kulen må ha for å danne en sirkel, gitt en avstand fra kulen, men nå er problemet
+følgende: Hvor fort må den bevege seog for å fullstendig unnslpippe kulens virkning?
+
+Denne analogien gir oss også svaret: legemet må ha høyere kinetisk energi enn
+gravitasjonspotensielet. Med andre ord må kulen ha nok energi til å "løftes" ut
+av brønnen. I trampoline-eksempelet betyr det at den kinetiske energien må være
+minimum:
+
+$$ E_k = E_p = mgh$$
+Den eneste forskjellen mellom trampolineanalogien og virkeligheten er at gravitasjonspotensialet
+er negativt. Det betyr at et legeme som klarer å unnslippe gravitasjonsbrønnen må tilfredsstille
+følgende likning:
+
+$$ E_k + E_p = 0$$
+$$E_p = -\gamma\frac{Mm}{r}$$
+
+Nå trenger vi bare å sette inn uttrykkene i likningen og løse med hensyn på $v$
+
+\begin{align}
+E_k + E_p &= 0\\
+\frac{1}{2}mv^2 -\gamma\frac{Mm}{r} &=0\\
+v^2 &=2\gamma\frac{M}{r}\\
+v &= \sqrt{\frac{2\gamma M}{r}}
+\end{align}
+
+En enkel sammenlikning mellom banefarten til sirklære baner og unnslipnningshastigheten
+viser at sistnevte er kun $\sqrt{2}$ ganger høyere ved samme avstand. Merk likevel
+at i bane er hastigheten normal med radien mens ved unnslippning er den parallell
+med radien.
